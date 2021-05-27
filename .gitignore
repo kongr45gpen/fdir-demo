@@ -1,0 +1,93 @@
+# .gitignore file sources:
+# https://www.microchip.com/forums/m790048.aspx
+# https://gitlab.com/acubesat/obc/ecss-services/-/blob/master/.gitignore
+#
+
+# Ignoring files according to http://microchip.wikidot.com/faq:72
+/*.X/build/
+/*.X/dist/
+
+# Ingoring private Makefiles, to create them open the MPLAB IDE or use the mplab_ide\bin\prjMakefilesGenerator script
+/*.X/nbproject/Makefile-*
+/*.X/nbproject/Package-*
+/*.X/nbproject/private/
+
+# Build files
+/build
+/cmake-build-debug
+/docs
+
+# Dump and continuous integration files
+*.dump
+__pycache__
+/ci/cppcheckdata.py
+/ci/misra.py
+/ci/report.msr
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.elf
+*.bin
+
+# JetBrains User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# JetBrains Generated files
+.idea/**/contentModel.xml
+
+# JetBrains User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# JetBrains Generated files
+.idea/**/contentModel.xml
+
+# JetBrains Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+.idea/**/markdown-*
+
+# Other IDEs
+.vscode
