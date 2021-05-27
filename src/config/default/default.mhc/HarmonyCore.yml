@@ -33,7 +33,7 @@ children:
         - type: Pairs
           children:
           - type: Pair
-            attributes: {description: 'FALSE', value: '0', key: ENABLE_DRV_COMMON}
+            attributes: {description: 'TRUE', value: '0', key: ENABLE_DRV_COMMON}
           - type: Pair
             attributes: {description: 'TRUE', value: '1', key: ENABLE_SYS_COMMON}
           - type: Pair
@@ -41,7 +41,7 @@ children:
           - type: Pair
             attributes: {description: 'FALSE', value: '0', key: ENABLE_SYS_PORTS}
           - type: Pair
-            attributes: {description: 'FALSE', value: '0', key: ENABLE_SYS_DMA}
+            attributes: {description: 'TRUE', value: '0', key: ENABLE_SYS_DMA}
           - type: Pair
             attributes: {description: 'FALSE', value: '0', key: ENABLE_SYS_RESET}
   - type: File
@@ -53,6 +53,60 @@ children:
         attributes: {id: enabled}
         children:
         - {type: Value, value: 'true'}
+  - type: File
+    attributes: {id: DMA_DEF}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+  - type: File
+    attributes: {id: DMA_HEADER}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+  - type: File
+    attributes: {id: DMA_MAPPING}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+  - type: File
+    attributes: {id: DMA_SOURCE}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+  - type: File
+    attributes: {id: DRIVER_COMMON}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
+  - type: File
+    attributes: {id: DRIVER_ROOT}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: enabled}
+        children:
+        - {type: Value, value: 'false'}
   - type: Boolean
     attributes: {id: ENABLE_APP_FILE}
     children:
@@ -60,6 +114,19 @@ children:
       children:
       - type: Dynamic
         attributes: {id: HarmonyCore, value: 'true'}
+  - type: Boolean
+    attributes: {id: ENABLE_DRV_COMMON}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: readOnly}
+        children:
+        - {type: Value, value: 'false'}
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: HarmonyCore, value: 'false'}
   - type: Boolean
     attributes: {id: ENABLE_OSAL}
     children:
@@ -87,6 +154,19 @@ children:
       children:
       - type: Dynamic
         attributes: {id: HarmonyCore, value: 'true'}
+  - type: Boolean
+    attributes: {id: ENABLE_SYS_DMA}
+    children:
+    - type: Attributes
+      children:
+      - type: Boolean
+        attributes: {id: readOnly}
+        children:
+        - {type: Value, value: 'false'}
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: HarmonyCore, value: 'false'}
   - type: Boolean
     attributes: {id: ENABLE_SYS_INT}
     children:

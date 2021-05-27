@@ -27,6 +27,10 @@
             <logicalFolder name="f4" displayName="systick" projectFiles="true">
               <itemPath>../src/config/default/peripheral/systick/plib_systick.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f6" displayName="usart" projectFiles="true">
+              <itemPath>../src/config/default/peripheral/usart/plib_usart_common.h</itemPath>
+              <itemPath>../src/config/default/peripheral/usart/plib_usart1.h</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f2" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
@@ -214,9 +218,13 @@
             <logicalFolder name="f4" displayName="systick" projectFiles="true">
               <itemPath>../src/config/default/peripheral/systick/plib_systick.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f6" displayName="usart" projectFiles="true">
+              <itemPath>../src/config/default/peripheral/usart/plib_usart1.c</itemPath>
+            </logicalFolder>
           </logicalFolder>
           <logicalFolder name="f1" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/default/stdio/gcc_monitor.c</itemPath>
+            <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
           <logicalFolder name="f3" displayName="system" projectFiles="true">
             <logicalFolder name="f2" displayName="cache" projectFiles="true">
@@ -235,6 +243,7 @@
           <itemPath>../src/config/default/libc_syscalls.c</itemPath>
           <itemPath>../src/config/default/tasks.c</itemPath>
           <itemPath>../src/config/default/startup_gcc.c</itemPath>
+          <itemPath>../src/config/default/startup_xc32.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
@@ -244,18 +253,20 @@
                    displayName="Important Files"
                    projectFiles="false">
       <logicalFolder name="f1" displayName="default.mhc" projectFiles="true">
-        <itemPath>../src/config/default/default.mhc/settings.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/dfp.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/usart1.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/project.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/core.yml</itemPath>
-        <itemPath>../src/config/default/default.mhc/dfp.yml</itemPath>
-        <itemPath>../src/config/default/default.mhc/cmsis.yml</itemPath>
-        <itemPath>../src/config/default/default.mhc/GraphSettings.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/settings.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/sys_time.yml</itemPath>
-        <itemPath>../src/config/default/default.mhc/HarmonyCore.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/efc.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/cmsis.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/HarmonyCore.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/GraphSettings.yml</itemPath>
       </logicalFolder>
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/default/harmony-manifest-success.yml</itemPath>
+      <itemPath>../src/config/default/harmony-manifest-failure.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -270,13 +281,13 @@
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>Simulator</platformTool>
-        <languageToolchain>ARM</languageToolchain>
-        <languageToolchainVersion>6.3.1</languageToolchainVersion>
+        <languageToolchain>XC32</languageToolchain>
+        <languageToolchainVersion>2.50</languageToolchainVersion>
         <platform>2</platform>
       </toolsSet>
       <packs>
-        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
         <pack name="SAMV71_DFP" vendor="Microchip" version="4.4.78"/>
+        <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -297,7 +308,6 @@
       </compileType>
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
-        <makeUseCleanTarget>false</makeUseCleanTarget>
         <makeCustomizationPreStep></makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
         <makeCustomizationPostStep></makeCustomizationPostStep>
@@ -429,7 +439,7 @@
         <property key="programoptions.preserveuserid" value="false"/>
       </AtmelIceTool>
       <C32>
-        <property key="additional-warnings" value="true"/>
+        <property key="additional-warnings" value="false"/>
         <property key="addresss-attribute-use" value="false"/>
         <property key="enable-app-io" value="false"/>
         <property key="enable-omit-frame-pointer" value="false"/>
@@ -440,10 +450,10 @@
                   value="../src;../src/config/default;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/;../src/packs/CMSIS/CMSIS/Core/Include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="isolate-each-function" value="true"/>
-        <property key="make-warnings-into-errors" value="true"/>
-        <property key="optimization-level" value="-O1"/>
-        <property key="place-data-into-section" value="true"/>
+        <property key="isolate-each-function" value="false"/>
+        <property key="make-warnings-into-errors" value="false"/>
+        <property key="optimization-level" value=""/>
+        <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros" value=""/>
@@ -512,7 +522,7 @@
         <property key="oXC32ld-extra-opts" value=""/>
         <property key="optimization-level" value=""/>
         <property key="preprocessor-macros" value=""/>
-        <property key="remove-unused-sections" value="true"/>
+        <property key="remove-unused-sections" value="false"/>
         <property key="report-memory-usage" value="false"/>
         <property key="serial-length" value=""/>
         <property key="serial-origin" value=""/>
@@ -536,9 +546,9 @@
                   value="../src;../src/config/default;../src/packs/ATSAMV71Q21B_DFP;../src/packs/CMSIS/;../src/packs/CMSIS/CMSIS/Core/Include"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="isolate-each-function" value="true"/>
+        <property key="isolate-each-function" value="false"/>
         <property key="make-warnings-into-errors" value="false"/>
-        <property key="optimization-level" value="-O1"/>
+        <property key="optimization-level" value=""/>
         <property key="place-data-into-section" value="false"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
@@ -929,8 +939,6 @@
         <property key="warningmessagebreakoptions.W0246_ADC_ACCUMULATION_BAD_RESSEL"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0247_ADC_CONVERSION_BAD_RESSEL"
-                  value="report"/>
-        <property key="warningmessagebreakoptions.W0248_ADC_WR_BEFORE_KEY_SEQ"
                   value="report"/>
         <property key="warningmessagebreakoptions.W0400_PWM_PWM_FASTER_THAN_FOSC"
                   value="report"/>

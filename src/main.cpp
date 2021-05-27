@@ -25,6 +25,7 @@
 #include <stddef.h>                     // Defines NULL
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
+#include <memory.h>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -41,17 +42,19 @@
 volatile uint8_t pinval = 0;
 volatile int xTask1 = 1;
 
-void xTask1Code(void *pvParameters){
+_Noreturn void xTask1Code(void *pvParameters){
 
     for(;;){
         PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
-        //vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(500));
+        char text[] = "kalispera!\r\n";
+        USART1_Write(text, strlen(text));
     }
 
 };
 
-void xTask2Code(void *pvParameters){
+_Noreturn void xTask2Code(void *pvParameters){
 
     for(;;){
         //PIO_PinToggle(PIO_PIN_PA23);
@@ -69,7 +72,7 @@ int main ( void )
 
 
     xTaskCreate(xTask1Code, "Task1",100, NULL, tskIDLE_PRIORITY + 1, NULL);
-    xTaskCreate(xTask2Code, "Task2",100, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(xTask2Code, "Task2",300, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
     while ( true )
