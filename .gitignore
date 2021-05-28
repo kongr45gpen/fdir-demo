@@ -12,6 +12,11 @@
 /*.X/nbproject/Package-*
 /*.X/nbproject/private/
 
+# Unused files
+/src/config/*/harmony-manifest-*.yml
+/src/config/*/startup_xc32.c
+/src/config/*/stdio/xc32_monitor.c
+
 # Build files
 /build
 /cmake-build-debug
