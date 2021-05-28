@@ -26,6 +26,7 @@
 #include <stdbool.h>                    // Defines true
 #include <stdlib.h>                     // Defines EXIT_FAILURE
 #include <memory.h>
+#include <Logger.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -47,9 +48,9 @@ _Noreturn void xTask1Code(void *pvParameters){
     for(;;){
         PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
-        vTaskDelay(pdMS_TO_TICKS(1));
+        vTaskDelay(pdMS_TO_TICKS(500));
         char text[] = "kalispera!\r\n";
-        USART1_Write(text, strlen(text));
+        LOG_INFO << text;
     }
 
 };
@@ -71,8 +72,8 @@ int main ( void )
     SYS_Initialize ( NULL );
 
 
-    xTaskCreate(xTask1Code, "Task1",100, NULL, tskIDLE_PRIORITY + 1, NULL);
-    xTaskCreate(xTask2Code, "Task2",300, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(xTask2Code, "Task2",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push

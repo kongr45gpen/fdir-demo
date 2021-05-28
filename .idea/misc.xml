@@ -3,6 +3,7 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <libraryRoots>
+      <file path="$PROJECT_DIR$/lib" />
       <file path="$PROJECT_DIR$/lib/FreeRTOS" />
     </libraryRoots>
   </component>
