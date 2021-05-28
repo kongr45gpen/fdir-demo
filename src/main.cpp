@@ -47,7 +47,7 @@ _Noreturn void xTask1Code(void *pvParameters){
     for(;;){
         PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(1));
         char text[] = "kalispera!\r\n";
         USART1_Write(text, strlen(text));
     }
@@ -75,6 +75,8 @@ int main ( void )
     xTaskCreate(xTask2Code, "Task2",300, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "EndlessLoop"
     while ( true )
     {
 
@@ -82,6 +84,7 @@ int main ( void )
         /* Maintain state machines of all polled MPLAB Harmony modules. */
         SYS_Tasks ( );
     }
+#pragma clang diagnostic pop
 
     /* Execution should not come here during normal operation */
 

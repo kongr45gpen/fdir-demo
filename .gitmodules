@@ -1,0 +1,3 @@
+[submodule "lib/ecss-services"]
+	path = lib/ecss-services
+	url = git@gitlab.com:kongr45gpen/ecss-services.git

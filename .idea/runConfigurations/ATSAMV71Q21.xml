@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="ATSAMV71Q21" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TEST_INTEGRATION" TARGET_NAME="TEST_INTEGRATION.elf" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="TEST_INTEGRATION" RUN_TARGET_NAME="TEST_INTEGRATION.elf">
+  <configuration default="false" name="ATSAMV71Q21" type="com.jetbrains.cidr.embedded.openocd.conf.type" factoryName="com.jetbrains.cidr.embedded.openocd.conf.factory" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="fdir-demo" TARGET_NAME="fdir-demo.elf" CONFIG_NAME="Debug" version="1" RUN_TARGET_PROJECT_NAME="fdir-demo" RUN_TARGET_NAME="fdir-demo.elf">
     <openocd version="1" gdb-port="3333" telnet-port="4444" board-config="$PROJECT_DIR$/atmel_samv71_xplained_ultra.cfg" reset-type="INIT" download-type="UPDATED_ONLY">
       <debugger kind="GDB" isBundled="true" />
     </openocd>
