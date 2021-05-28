@@ -70,6 +70,17 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
 
+    CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk;
+    DWT->LAR = 0xC5ACCE55;
+    DWT->CYCCNT = 0;
+    DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk;
+    ITM->TCR = 0x00010015;
+    ITM->TER |= 1;
+    ITM->TPR |= 1;
+    TPI->SPPR = 0x2;
+    TPI->FFCR = 0x100;
+    TPI->ACPR = 0x4;
+
 
     xTaskCreate(xTask1Code, "Task1",100, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(xTask2Code, "Task2",300, NULL, tskIDLE_PRIORITY + 1, NULL);
