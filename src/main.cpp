@@ -28,6 +28,8 @@
 #include <memory.h>
 #include <Logger.hpp>
 #include <Parameters/SystemParameters.hpp>
+#include <ServicePool.hpp>
+#include <Parameters/SystemParameterMonitoring.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -59,9 +61,10 @@ _Noreturn void xTask1Code(void *pvParameters){
 _Noreturn void xTask2Code(void *pvParameters){
 
     for(;;){
-        //PIO_PinToggle(PIO_PIN_PA23);
+//        PIO_PinToggle(PIO_PIN_PA23);
         pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(500));
+        Services.onBoardMonitoring.checkAll();
     }
 
 };
@@ -72,9 +75,7 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
 
-    float a  = 5.5;
-    Logger::format.precision(5);
-    LOG_ERROR << systemParameters.temperature2Value.getValue();
+    systemParameterMonitoring.emplace();
 
     xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(xTask2Code, "Task2",1000, NULL, tskIDLE_PRIORITY + 1, NULL);

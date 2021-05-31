@@ -23,6 +23,11 @@ public:
     };
 
     SystemParameters() = default;
+
+    template<typename Value>
+    Value getParameterValue(uint16_t parameterId) {
+        return reinterpret_cast<Parameter<Value>*>(&(parametersArray[parameterId].get()))->getValue();
+    }
 };
 
 extern SystemParameters systemParameters;
