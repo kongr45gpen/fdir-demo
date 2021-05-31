@@ -24,7 +24,7 @@ void Logger::log(Logger::LogLevel level, etl::istring & message) {
         strcpy(name, "emergency");
     }
 
-    size_t count = snprintf(uartMessage, 254, "%-7lu [%-7s] %s", xTaskGetTickCount(), name, message.c_str());
+    size_t count = snprintf(uartMessage, 254, "%-7lu [%-7s] %s\r\n", xTaskGetTickCount(), name, message.c_str());
 
     USART1_Write(uartMessage, count);
 
