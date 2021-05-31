@@ -44,6 +44,97 @@ void __libc_init_array(void);
 /* Default empty handler */
 void Dummy_Handler(void);
 
+static inline void Software_Breakpoint(void)
+{
+    asm volatile("BKPT");
+}
+
+/* Enable Instruction Cache */
+static inline void ICache_Enable(void)
+{
+    SCB_EnableICache();
+}
+
+/* Enable Data Cache */
+static inline void DCache_Enable(void)
+{
+    SCB_EnableDCache();
+}
+
+/* Enable FPU */
+static inline void FPU_Enable(void)
+{
+    uint32_t prim;
+    prim = __get_PRIMASK();
+    __disable_irq();
+
+    SCB->CPACR |= (0xFu << 20);
+    __DSB();
+    __ISB();
+
+    if (!prim)
+    {
+        __enable_irq();
+    }
+}
+#define GPNVM_TCM_SIZE_Pos        7u
+#define GPNVM_TCM_SIZE_Msk        (0x3u << GPNVM_TCM_SIZE_Pos)
+
+/** Program GPNVM fuse for TCM configuration */
+static inline void TCM_Configure(uint32_t neededGpnvmValue)
+{
+    static uint32_t gpnvmReg;
+    static uint32_t cmd;
+
+    /* Read GPNVM fuse setting  */
+    EFC_REGS->EEFC_FCR = (EEFC_FCR_FKEY_PASSWD | EEFC_FCR_FCMD_GGPB);
+
+    while (!(EFC_REGS->EEFC_FSR & EEFC_FSR_FRDY_Msk))
+    {
+    }
+
+    gpnvmReg=EFC_REGS->EEFC_FRR;
+
+    /* Program only if change is needed */
+    if (((gpnvmReg & GPNVM_TCM_SIZE_Msk)>>GPNVM_TCM_SIZE_Pos) != neededGpnvmValue)
+    {
+        if(neededGpnvmValue & 0x2)
+            cmd=EEFC_FCR_FCMD_SGPB;
+        else
+            cmd=EEFC_FCR_FCMD_CGPB;
+
+        EFC_REGS->EEFC_FCR = (EEFC_FCR_FKEY_PASSWD | cmd | EEFC_FCR_FARG(8));
+        while (!(EFC_REGS->EEFC_FSR & EEFC_FSR_FRDY_Msk))
+        {
+        }
+
+        if(neededGpnvmValue & 0x1)
+            cmd=EEFC_FCR_FCMD_SGPB;
+        else
+            cmd=EEFC_FCR_FCMD_CGPB;
+
+        EFC_REGS->EEFC_FCR = (EEFC_FCR_FKEY_PASSWD | cmd | EEFC_FCR_FARG(7));
+        while (!(EFC_REGS->EEFC_FSR & EEFC_FSR_FRDY_Msk))
+        {
+        }
+
+        /* Reset the device for the programmed fuse value to take effect */
+        RSTC_REGS->RSTC_CR = RSTC_CR_KEY_PASSWD | RSTC_CR_PROCRST_Msk;
+    }
+}
+
+/* Disable TCM memory */
+static inline void __attribute__((optimize("-O1"))) TCM_Disable(void)
+{
+    __DSB();
+    __ISB();
+    SCB->ITCMCR &= ~(uint32_t)SCB_ITCMCR_EN_Msk;
+    SCB->DTCMCR &= ~(uint32_t)SCB_ITCMCR_EN_Msk;
+    __DSB();
+    __ISB();
+}
+
+
 /**
  * \brief This is the code that gets called on processor reset.
  * To initialize the device, and call the main() routine.
@@ -67,6 +158,11 @@ void Reset_Handler(void)
                 *pDest++ = 0;
         }
 
+        /* Enable the floating point unit */
+#if (__ARM_FP==14) || (__ARM_FP==4)
+        FPU_Enable();
+#endif
+
         /* Set the vector table base address */
         pSrc = (uint32_t *) & _sfixed;
         SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
@@ -88,6 +184,8 @@ void Reset_Handler(void)
 
         /* Branch to main function */
         main();
+
+        Software_Breakpoint();
 
         /* Infinite loop */
         while (1);

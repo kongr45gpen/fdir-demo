@@ -3,6 +3,7 @@
 ## Installation
 1. You will need to install `openocd` with `cmsis-dap` support. You will need to `sudo apt install libhidapi-dev`.
 2. Copy `60-openocd.rules` to `/etc/udev/rules.d/` and run `sudo udevadm control --reload-rules && sudo udevadm trigger`
+3. Make sure you have recursively cloned all submodules. You can make sure of that by using `git submodule update --init --recursive`
 
 ## Connecting to a board
 This project is designed to be executed on the ATSAMV71-XULT development board, connected
