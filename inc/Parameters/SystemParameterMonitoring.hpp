@@ -5,18 +5,24 @@
 #include <ServicePool.hpp>
 
 class SystemParameterMonitoring {
-
-    OnBoardMonitoringService::ParameterMonitoringDefinition<float,OnBoardMonitoringService::LimitCheck<float>> defn2 {
+    OnBoardMonitoringService::ParameterMonitoringDefinition<float,OnBoardMonitoringService::LimitCheck<float>> sensor1check {
         1, 0, 100, 1, {
             10,0,40,0
         }
+    };
+
+    OnBoardMonitoringService::ParameterMonitoringDefinition<float,OnBoardMonitoringService::LimitCheck<float>> sensor2check {
+            1, 1, 100, 1, {
+                    10,0,40,0
+            }
     };
 
 public:
     SystemParameterMonitoring() {
         OnBoardMonitoringService& service = Services.onBoardMonitoring;
 
-        service.addParameterMonitoringDefinition(defn2);
+        service.addParameterMonitoringDefinition(sensor1check);
+        service.addParameterMonitoringDefinition(sensor2check);
     }
 };
 

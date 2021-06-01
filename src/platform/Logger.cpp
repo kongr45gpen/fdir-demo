@@ -2,6 +2,7 @@
 #include <FreeRTOS.h>
 #include <task.h>
 #include <definitions.h>
+#include <Tasks/UARTTask.hpp>
 
 void Logger::log(Logger::LogLevel level, etl::istring & message) {
     char uartMessage[254];
@@ -26,7 +27,7 @@ void Logger::log(Logger::LogLevel level, etl::istring & message) {
 
     size_t count = snprintf(uartMessage, 254, "%-7lu [%-7s] %s\r\n", xTaskGetTickCount(), name, message.c_str());
 
-    USART1_Write(uartMessage, count);
-
-//    uartTask->queueUARTMessage({uartMessage, static_cast<uint8_t>(count), MessageType::Log});
+    if (uartTask) {
+        uartTask->sendUARTMessage(UARTTask::StringType(uartMessage, count));
+    }
 }

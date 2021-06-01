@@ -30,6 +30,7 @@
 #include <Parameters/SystemParameters.hpp>
 #include <ServicePool.hpp>
 #include <Parameters/SystemParameterMonitoring.hpp>
+#include <Tasks/UARTTask.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -52,8 +53,7 @@ _Noreturn void xTask1Code(void *pvParameters){
         PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(500));
-        char text[] = "kalispera!";
-        LOG_EMERGENCY << text;
+        LOG_DEBUG << "kalispera";
     }
 
 };
@@ -69,6 +69,15 @@ _Noreturn void xTask2Code(void *pvParameters){
 
 };
 
+/**
+ * Just calls the operator() function of a task
+ * @param pvParameters Pointer to object of type Task
+ */
+template<class Task>
+static void vClassTask(void *pvParameters) {
+    (static_cast<Task *>(pvParameters))->operator()();
+}
+
 
 int main ( void )
 {
@@ -76,9 +85,12 @@ int main ( void )
     SYS_Initialize ( NULL );
 
     systemParameterMonitoring.emplace();
+    uartTask.emplace();
 
     xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(xTask2Code, "Task2",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
+
+    xTaskCreate(vClassTask<UARTTask>, "UART", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push
