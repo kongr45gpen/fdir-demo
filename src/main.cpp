@@ -88,9 +88,9 @@ int main ( void )
     uartTask.emplace();
 
     xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
-    xTaskCreate(xTask2Code, "Task2",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(xTask2Code, "Task2",3000, NULL, tskIDLE_PRIORITY + 1, NULL);
 
-    xTaskCreate(vClassTask<UARTTask>, "UART", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(vClassTask<UARTTask>, "UART", 3000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push

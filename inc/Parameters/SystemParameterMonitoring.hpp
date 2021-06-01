@@ -2,16 +2,17 @@
 #define FDIR_DEMO_SYSTEMPARAMETERMONITORING_HPP
 
 #include <Services/OnBoardMonitoringService.hpp>
+#include <Services/OnBoardMonitoringChecks.hpp>
 #include <ServicePool.hpp>
 
 class SystemParameterMonitoring {
-    OnBoardMonitoringService::ParameterMonitoringDefinition<float,OnBoardMonitoringService::LimitCheck<float>> sensor1check {
+    OnBoardMonitoringService::ParameterMonitoringDefinition<float,LimitCheck<float>> sensor1check {
         1, 0, 100, 1, {
             10,0,40,0
         }
     };
 
-    OnBoardMonitoringService::ParameterMonitoringDefinition<float,OnBoardMonitoringService::LimitCheck<float>> sensor2check {
+    OnBoardMonitoringService::ParameterMonitoringDefinition<float,LimitCheck<float>> sensor2check {
             1, 1, 100, 1, {
                     10,0,40,0
             }
