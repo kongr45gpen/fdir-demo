@@ -13,13 +13,13 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: 6069C4FD56993BDA3B1FC223DD5BAA4A
-- generatedChecksum: 74BEF4D6DAB2F7206D1BC00425823413
+- generatedChecksum: E1027BEC6B1EB81E089DDF3126DB3348
   logicalPath: config/default
   name: initialization.c
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: ED794BC1F2AAAA33F85D61A7A9428A8C
+  userChecksum: 321BC64394F4BB013BBCAEAF6F4FB8A5
 - generatedChecksum: 51F63D70A146F799B67B34D8064D33CF
   logicalPath: config/default
   name: interrupts.c
@@ -41,13 +41,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: null
-- generatedChecksum: 94E9EACBEA1D9E61ED67FDFCF1065435
+- generatedChecksum: F1A79F796765BCBCAC3533AB010CB0A0
+  logicalPath: config/default/peripheral/afec
+  name: plib_afec0.c
+  physicalPath: peripheral/afec
+  security: NON_SECURE
+  type: SOURCE
+  userChecksum: F1A79F796765BCBCAC3533AB010CB0A0
+- generatedChecksum: A57A6B6F0C81ECD2D3E511F4FE5A1BBF
   logicalPath: config/default/peripheral/clk
   name: plib_clk.c
   physicalPath: peripheral/clk
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 94E9EACBEA1D9E61ED67FDFCF1065435
+  userChecksum: A57A6B6F0C81ECD2D3E511F4FE5A1BBF
 - generatedChecksum: FE200EC8792729E8C9B163A12991C169
   logicalPath: config/default/peripheral/efc
   name: plib_efc.c
@@ -89,7 +96,7 @@ files:
   physicalPath: ''
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 3A35F794BD3C19E7B3142ED6806E4EFE
+  userChecksum: D41D8CD98F00B204E9800998ECF8427E
 - generatedChecksum: 9063CE23C03357B7F90CA6887D4BCAF9
   logicalPath: config/default/system/cache
   name: sys_cache.c
@@ -279,13 +286,13 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 4C770ED3B4760225F01F9A68FACF5692
-- generatedChecksum: F6B9378CAB477F2A0756A486FA3253F7
+- generatedChecksum: 93EE96196A3E852EDFA435BE654CD02F
   logicalPath: config/default
   name: definitions.h
   physicalPath: ''
   security: NON_SECURE
   type: HEADER
-  userChecksum: F6B9378CAB477F2A0756A486FA3253F7
+  userChecksum: 93EE96196A3E852EDFA435BE654CD02F
 - generatedChecksum: E4DDC7F84738825A532EDB866BEDBA03
   logicalPath: config/default
   name: device.h
@@ -538,6 +545,20 @@ files:
   security: NON_SECURE
   type: HEADER
   userChecksum: 2AEA71F3C724596C3D107B634FEFE991
+- generatedChecksum: DA0F19BA43CCCCAFD8276B5CF7891A03
+  logicalPath: config/default/peripheral/afec
+  name: plib_afec0.h
+  physicalPath: peripheral/afec
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: DA0F19BA43CCCCAFD8276B5CF7891A03
+- generatedChecksum: E1F22172394877E78C6A32ACC21A00BE
+  logicalPath: config/default/peripheral/afec
+  name: plib_afec_common.h
+  physicalPath: peripheral/afec
+  security: NON_SECURE
+  type: HEADER
+  userChecksum: E1F22172394877E78C6A32ACC21A00BE
 - generatedChecksum: BFDB10EBEF4DBDE66563BA7DD136A98F
   logicalPath: config/default/peripheral/clk
   name: plib_clk.h
@@ -1076,7 +1097,7 @@ files:
   physicalPath: ''
   security: NON_SECURE
   type: LINKER
-  userChecksum: 24F40B8A5E6A2A17860B03DA9F8CD24F
+  userChecksum: 26C784419CEE471BB0E4C118DF012BC9
 format_version: v1.0
 libraries: []
 settings:
@@ -1091,7 +1112,7 @@ settings:
   delimiter: ''
   key: heap-size
   security: NON_SECURE
-  value: '512'
+  value: '1024'
 - append: false
   category: C32-LD
   delimiter: ''

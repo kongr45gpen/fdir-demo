@@ -49,11 +49,22 @@ volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
 
+    AFEC0_ChannelsDisable(AFEC_CH10_MASK);
+    AFEC0_ChannelGainSet(AFEC_CH11, AFEC_CHANNEL_GAIN_X1);
+    AFEC0_ChannelOffsetSet(AFEC_CH11, 690);
+    AFEC0_ChannelsEnable(AFEC_CH11_MASK);
+
+
     for(;;){
-        PIO_PinToggle(PIO_PIN_PA23);
+//        PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
-        vTaskDelay(pdMS_TO_TICKS(500));
-        LOG_DEBUG << "kalispera";
+        AFEC0_ConversionStart();
+        vTaskDelay(pdMS_TO_TICKS(100));
+
+        uint16_t rawTemperature = AFEC0_ChannelResultGet(AFEC_CH11);
+        float temperature = 30 + (rawTemperature - 4000.0f) / 46.27f;
+
+        LOG_DEBUG << "kalispera " << temperature;
     }
 
 };
@@ -61,7 +72,7 @@ _Noreturn void xTask1Code(void *pvParameters){
 _Noreturn void xTask2Code(void *pvParameters){
 
     for(;;){
-//        PIO_PinToggle(PIO_PIN_PA23);
+        PIO_PinToggle(PIO_PIN_PA23);
         pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(500));
         Services.onBoardMonitoring.checkAll();
@@ -83,6 +94,8 @@ int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
+
+    Logger::format.precision(2);
 
     systemParameterMonitoring.emplace();
     uartTask.emplace();
