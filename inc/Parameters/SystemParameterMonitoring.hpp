@@ -7,13 +7,13 @@
 
 class SystemParameterMonitoring {
     OnBoardMonitoringService::ParameterMonitoringDefinition<float,LimitCheck<float>> sensor1check {
-        1, 0, 100, 1, {
+        1, 0, 200, 5, {
             20,0,30,0
         }
     };
 
     OnBoardMonitoringService::ParameterMonitoringDefinition<float,LimitCheck<float>> sensor2check {
-            1, 1, 100, 1, {
+            1, 1, 1000, 1, {
                     10,0,40,0
             }
     };
