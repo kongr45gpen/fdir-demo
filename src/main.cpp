@@ -64,6 +64,8 @@ _Noreturn void xTask1Code(void *pvParameters){
         uint16_t rawTemperature = AFEC0_ChannelResultGet(AFEC_CH11);
         float temperature = 30 + (rawTemperature - 4000.0f) / 46.27f;
 
+        systemParameters.temperature1Value.setValue(temperature);
+
         LOG_DEBUG << "kalispera " << temperature;
     }
 
@@ -76,6 +78,7 @@ _Noreturn void xTask2Code(void *pvParameters){
         pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(500));
         Services.onBoardMonitoring.checkAll();
+        Services.housekeeping.checkAndSendHousekeepingReports(TimeHelper::ticksToUTC(xTaskGetTickCount()));
     }
 
 };

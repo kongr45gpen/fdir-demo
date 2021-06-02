@@ -8,7 +8,7 @@
 class SystemParameterMonitoring {
     OnBoardMonitoringService::ParameterMonitoringDefinition<float,LimitCheck<float>> sensor1check {
         1, 0, 100, 1, {
-            10,0,40,0
+            20,0,30,0
         }
     };
 
