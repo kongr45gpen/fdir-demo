@@ -1,3 +1,6 @@
 [submodule "lib/ecss-services"]
 	path = lib/ecss-services
 	url = git@gitlab.com:kongr45gpen/ecss-services.git
+[submodule "lib/cobs-c"]
+	path = lib/cobs-c
+	url = https://github.com/cmcqueen/cobs-c.git

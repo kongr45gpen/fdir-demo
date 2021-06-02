@@ -3,6 +3,9 @@
 #include <task.h>
 #include <definitions.h>
 #include <Tasks/UARTTask.hpp>
+#include <Message.hpp>
+#include <MessageParser.hpp>
+#include <COBS.hpp>
 
 void Logger::log(Logger::LogLevel level, etl::istring & message) {
     char uartMessage[254];
@@ -28,6 +31,12 @@ void Logger::log(Logger::LogLevel level, etl::istring & message) {
     size_t count = snprintf(uartMessage, 254, "%-7lu [%-7s] %s\r\n", xTaskGetTickCount(), name, message.c_str());
 
     if (uartTask) {
-        uartTask->sendUARTMessage(UARTTask::StringType(uartMessage, count));
+        Message logMessage(255, 255, Message::TC, 0);
+        std::copy(uartMessage, uartMessage + count, logMessage.data);
+        logMessage.dataSize = count;
+
+        etl::string<256> encodedData = COBSencode<256>(MessageParser::composeECSS(logMessage));
+
+        uartTask->sendUARTMessage(encodedData);
     }
 }
