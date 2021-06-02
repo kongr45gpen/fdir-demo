@@ -59,6 +59,7 @@ _Noreturn void xTask1Code(void *pvParameters){
 //        PIO_PinToggle(PIO_PIN_PA23);
         //pinval = PIO_PinRead(PIO_PIN_PA23);
         AFEC0_ConversionStart();
+        PIO_PinToggle(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(100));
 
         uint16_t rawTemperature = AFEC0_ChannelResultGet(AFEC_CH11);
@@ -74,10 +75,9 @@ _Noreturn void xTask1Code(void *pvParameters){
 _Noreturn void xTask2Code(void *pvParameters){
 
     for(;;){
-        PIO_PinToggle(PIO_PIN_PA23);
         pinval = PIO_PinRead(PIO_PIN_PA23);
-        vTaskDelay(pdMS_TO_TICKS(500));
-        Services.onBoardMonitoring.checkAll();
+        vTaskDelay(pdMS_TO_TICKS(1));
+        Services.onBoardMonitoring.checkAll(xTaskGetTickCount());
         Services.housekeeping.checkAndSendHousekeepingReports(TimeHelper::ticksToUTC(xTaskGetTickCount()));
     }
 
