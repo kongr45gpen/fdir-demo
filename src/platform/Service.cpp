@@ -16,7 +16,7 @@ void Service::storeMessage(Message& message) {
               << " [" << message.serviceType << "," << message.messageType << "]";
 
     if (uartTask) {
-        etl::string<256> encodedData = COBSencode<256>(MessageParser::composeECSS(message));
+        etl::string<256> encodedData = COBSencode<256>(MessageParser::composeECSS(message)).append(1, '\0');
 
         uartTask->sendUARTMessage(encodedData);
     }

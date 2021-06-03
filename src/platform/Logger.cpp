@@ -35,8 +35,7 @@ void Logger::log(Logger::LogLevel level, etl::istring & message) {
         std::copy(uartMessage, uartMessage + count, logMessage.data);
         logMessage.dataSize = count;
 
-        etl::string<256> encodedData = COBSencode<256>(MessageParser::composeECSS(logMessage));
-
+        etl::string<256> encodedData = COBSencode<256>(MessageParser::composeECSS(logMessage)).append(1, '\0');
         uartTask->sendUARTMessage(encodedData);
     }
 }
