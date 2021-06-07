@@ -71,6 +71,24 @@
 #define GPIO_PA23_Get()               ((PIOA_REGS->PIO_PDSR >> 23) & 0x1)
 #define GPIO_PA23_PIN                  PIO_PIN_PA23
 
+/*** Macros for BTN0 pin ***/
+#define BTN0_Set()               (PIOA_REGS->PIO_SODR = (1<<9))
+#define BTN0_Clear()             (PIOA_REGS->PIO_CODR = (1<<9))
+#define BTN0_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<9))
+#define BTN0_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<9))
+#define BTN0_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<9))
+#define BTN0_Get()               ((PIOA_REGS->PIO_PDSR >> 9) & 0x1)
+#define BTN0_PIN                  PIO_PIN_PA9
+
+/*** Macros for BT1 pin ***/
+#define BT1_Set()               (PIOB_REGS->PIO_SODR = (1<<12))
+#define BT1_Clear()             (PIOB_REGS->PIO_CODR = (1<<12))
+#define BT1_Toggle()            (PIOB_REGS->PIO_ODSR ^= (1<<12))
+#define BT1_OutputEnable()      (PIOB_REGS->PIO_OER = (1<<12))
+#define BT1_InputEnable()       (PIOB_REGS->PIO_ODR = (1<<12))
+#define BT1_Get()               ((PIOB_REGS->PIO_PDSR >> 12) & 0x1)
+#define BT1_PIN                  PIO_PIN_PB12
+
 
 // *****************************************************************************
 /* PIO Port

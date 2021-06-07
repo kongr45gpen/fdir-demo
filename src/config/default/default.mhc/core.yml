@@ -32,6 +32,34 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '150000000'}
+  - type: Boolean
+    attributes: {id: AFEC0_INTERRUPT_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: afec0, value: 'false'}
+  - type: Boolean
+    attributes: {id: AFEC0_INTERRUPT_ENABLE_UPDATE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'true'}
+  - type: String
+    attributes: {id: AFEC0_INTERRUPT_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: afec0, value: AFEC0_Handler}
+  - type: Boolean
+    attributes: {id: AFEC0_INTERRUPT_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: afec0, value: 'false'}
   - type: Integer
     attributes: {id: AFEC1_CLOCK_FREQUENCY}
     children:
@@ -248,6 +276,27 @@ children:
         attributes: {id: core, value: HSMCI_Handler}
   - type: Boolean
     attributes: {id: NVIC_18_0_HANDLER_LOCK}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: Boolean
+    attributes: {id: NVIC_29_0_ENABLE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: 'false'}
+  - type: String
+    attributes: {id: NVIC_29_0_HANDLER}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: AFEC0_Handler}
+  - type: Boolean
+    attributes: {id: NVIC_29_0_HANDLER_LOCK}
     children:
     - type: Values
       children:
@@ -506,6 +555,27 @@ children:
       - type: User
         attributes: {value: GPIO}
   - type: String
+    attributes: {id: PIN_75_FUNCTION_NAME}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: BTN0}
+  - type: String
+    attributes: {id: PIN_75_FUNCTION_TYPE}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
+    attributes: {id: PIN_75_PERIPHERAL_FUNCTION}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
     attributes: {id: PIN_79_FUNCTION_TYPE}
     children:
     - type: Values
@@ -519,6 +589,27 @@ children:
       children:
       - type: User
         attributes: {value: Alternate}
+  - type: String
+    attributes: {id: PIN_87_FUNCTION_NAME}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: BT1}
+  - type: String
+    attributes: {id: PIN_87_FUNCTION_TYPE}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
+    attributes: {id: PIN_87_PERIPHERAL_FUNCTION}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
   - type: String
     attributes: {id: PIN_89_FUNCTION_TYPE}
     children:
@@ -679,7 +770,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '16'}
+        attributes: {id: core, value: '4112'}
   - type: Hex
     attributes: {id: PMC_PCER0}
     children:

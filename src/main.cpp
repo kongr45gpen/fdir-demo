@@ -65,9 +65,14 @@ _Noreturn void xTask1Code(void *pvParameters){
         uint16_t rawTemperature = AFEC0_ChannelResultGet(AFEC_CH11);
         float temperature = 30 + (rawTemperature - 4000.0f) / 46.27f;
 
+        if (!BTN0_Get()) {
+            temperature += 80;
+            LOG_DEBUG << "Fake input activated";
+        }
+
         systemParameters.temperature1Value.setValue(temperature);
 
-        LOG_DEBUG << "kalispera " << temperature;
+        LOG_DEBUG << "T1 = " << temperature;
     }
 
 };
