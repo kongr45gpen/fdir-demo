@@ -31,6 +31,7 @@
 #include <ServicePool.hpp>
 #include <Parameters/SystemParameterMonitoring.hpp>
 #include <Tasks/UARTTask.hpp>
+#include <Tasks/UARTRXTask.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -107,11 +108,13 @@ int main ( void )
 
     systemParameterMonitoring.emplace();
     uartTask.emplace();
+    uartRXtask.emplace();
 
     xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(xTask2Code, "Task2",3000, NULL, tskIDLE_PRIORITY + 1, NULL);
 
-    xTaskCreate(vClassTask<UARTTask>, "UART", 3000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 1000, &*uartRXtask, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push
