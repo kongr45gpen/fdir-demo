@@ -2,6 +2,9 @@
 #include "Tasks/UARTRXTask.hpp"
 #include <Logger.hpp>
 #include <definitions.h>
+#include <MessageParser.hpp>
+
+using ECSSMessage = Message;
 
 std::optional<UARTRXTask> uartRXtask;
 
@@ -49,7 +52,11 @@ void UARTRXTask::operator()() {
             LOG_ERROR << "RX too large message";
         }
 
-        LOG_INFO << buffer.message;
+        ECSSMessage ecss = MessageParser::parseECSSTC(buffer.message);
+
+        LOG_INFO << "Received new [" << ecss.serviceType << "," << ecss.messageType << "] TC";
+
+        MessageParser::execute(ecss);
     }
 }
 

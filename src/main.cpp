@@ -114,7 +114,7 @@ int main ( void )
     xTaskCreate(xTask2Code, "Task2",3000, NULL, tskIDLE_PRIORITY + 1, NULL);
 
     xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
-    xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 1000, &*uartRXtask, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 2500, &*uartRXtask, tskIDLE_PRIORITY + 1, NULL);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push
