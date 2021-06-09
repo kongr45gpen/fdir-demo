@@ -4,6 +4,7 @@
 #include "FreeRTOS.h"
 #include <queue.h>
 #include <atomic>
+#include "etl/String.hpp"
 
 class UARTRXTask {
 public:
@@ -26,6 +27,9 @@ private:
     std::atomic<bool> overRun = false;
 
     QueueHandle_t rxQueue;
+
+    Message buffer{};
+    etl::string<MaxInputSize> cobsBuffer;
 };
 
 extern std::optional<UARTRXTask> uartRXtask;

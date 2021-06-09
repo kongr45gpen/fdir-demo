@@ -3,6 +3,7 @@
 #include <Logger.hpp>
 #include <definitions.h>
 #include <MessageParser.hpp>
+#include <COBS.hpp>
 
 using ECSSMessage = Message;
 
@@ -43,7 +44,6 @@ UARTRXTask::UARTRXTask() {
 }
 
 void UARTRXTask::operator()() {
-    Message buffer{};
     while (true) {
         xQueueReceive(rxQueue, static_cast<void*>(&buffer), portMAX_DELAY);
 
@@ -52,7 +52,9 @@ void UARTRXTask::operator()() {
             LOG_ERROR << "RX too large message";
         }
 
-        ECSSMessage ecss = MessageParser::parseECSSTC(buffer.message);
+        cobsBuffer = COBSdecode<MaxInputSize>(reinterpret_cast<uint8_t*>(buffer.message), MaxInputSize);
+
+        ECSSMessage ecss = MessageParser::parseECSSTC(cobsBuffer.c_str());
 
         LOG_INFO << "Received new [" << ecss.serviceType << "," << ecss.messageType << "] TC";
 
