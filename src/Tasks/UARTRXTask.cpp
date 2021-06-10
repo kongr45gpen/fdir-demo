@@ -54,7 +54,7 @@ void UARTRXTask::operator()() {
 
         cobsBuffer = COBSdecode<MaxInputSize>(reinterpret_cast<uint8_t*>(buffer.message), MaxInputSize);
 
-        ECSSMessage ecss = MessageParser::parseECSSTC(cobsBuffer.c_str());
+        ECSSMessage ecss = MessageParser::parseECSSTC(reinterpret_cast<const uint8_t*>(cobsBuffer.c_str()));
 
         LOG_INFO << "Received new [" << ecss.serviceType << "," << ecss.messageType << "] TC";
 
