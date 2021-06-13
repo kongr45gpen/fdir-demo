@@ -16,6 +16,11 @@ void ECSSTask::operator()() {
     }
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "performance-unnecessary-value-param"
 ECSSTask::ECSSTask() {
-
+    Services.functionManagement.include("restart", [](String<ECSS_FUNCTION_MAX_ARG_LENGTH>){
+        NVIC_SystemReset();
+    });
 }
+#pragma clang diagnostic pop
