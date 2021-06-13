@@ -84,7 +84,7 @@ _Noreturn void xTask2Code(void *pvParameters){
         pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(1));
         Services.onBoardMonitoring.checkAll(xTaskGetTickCount());
-        Services.housekeeping.checkAndSendHousekeepingReports(TimeHelper::ticksToUTC(xTaskGetTickCount()));
+        Services.housekeeping.checkAndSendHousekeepingReports(xTaskGetTickCount());
     }
 
 };
