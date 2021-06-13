@@ -32,6 +32,7 @@
 #include <Parameters/SystemParameterMonitoring.hpp>
 #include <Tasks/UARTTask.hpp>
 #include <Tasks/UARTRXTask.hpp>
+#include <Tasks/ECSSTask.h>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -45,7 +46,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-volatile uint8_t pinval = 0;
 volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
@@ -78,17 +78,6 @@ _Noreturn void xTask1Code(void *pvParameters){
 
 };
 
-_Noreturn void xTask2Code(void *pvParameters){
-
-    for(;;){
-        pinval = PIO_PinRead(PIO_PIN_PA23);
-        vTaskDelay(pdMS_TO_TICKS(1));
-        Services.onBoardMonitoring.checkAll(xTaskGetTickCount());
-        Services.housekeeping.checkAndSendHousekeepingReports(xTaskGetTickCount());
-    }
-
-};
-
 /**
  * Just calls the operator() function of a task
  * @param pvParameters Pointer to object of type Task
@@ -109,9 +98,10 @@ int main ( void )
     systemParameterMonitoring.emplace();
     uartTask.emplace();
     uartRXtask.emplace();
+    ecssTask.emplace();
 
     xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
-    xTaskCreate(xTask2Code, "Task2",3000, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, NULL);
 
     xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 2500, &*uartRXtask, tskIDLE_PRIORITY + 1, NULL);
