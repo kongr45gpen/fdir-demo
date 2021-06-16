@@ -33,6 +33,7 @@
 #include <Tasks/UARTTask.hpp>
 #include <Tasks/UARTRXTask.hpp>
 #include <Tasks/ECSSTask.h>
+#include <Peripherals/MCP9808.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -49,6 +50,9 @@
 volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
+
+    static MCP9808 mcp9808(0);
+    mcp9808.setResolution(MCP9808_RES_0_0625C);
 
     AFEC0_ChannelsDisable(AFEC_CH10_MASK);
     AFEC0_ChannelGainSet(AFEC_CH11, AFEC_CHANNEL_GAIN_X1);
@@ -73,7 +77,11 @@ _Noreturn void xTask1Code(void *pvParameters){
 
         systemParameters.temperature1Value.setValue(temperature);
 
-        LOG_DEBUG << "T1 = " << temperature;
+        float externalTemperature = 0;
+        mcp9808.getTemp(externalTemperature);
+
+        LOG_DEBUG << "T0 = " << temperature;
+        LOG_DEBUG << "T1 = " << externalTemperature;
     }
 
 };
@@ -100,7 +108,7 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
-    xTaskCreate(xTask1Code, "Task1",1000, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(xTask1Code, "Task1",2500, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, NULL);
 
     xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
