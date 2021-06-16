@@ -2,21 +2,27 @@
  * @author Grigoris Pavlakis <grigpavl@ece.auth.gr>
  */
 
-#include <definitions.h>
 #include "FreeRTOS.h"
 #include <task.h>
 #include <Logger.hpp>
 #include "Peripherals/MCP9808.hpp"
 
 void MCP9808::wait() {
-    while (TWIHS0_IsBusy()) {
+    auto start = xTaskGetTickCount();
+
+    while (TWI_IsBusy()) {
+        if (xTaskGetTickCount() - start > 100) {
+            LOG_ERROR << "I2C " << i2c << " timeout";
+            TWI_Initialize();
+            return;
+        }
         taskYIELD();
     }
 
-    auto error = TWIHS0_ErrorGet();
+    auto error = TWI_ErrorGet();
 
     if (error != TWIHS_ERROR_NONE) {
-//        LOG_ERROR << "Error in TWI: " << error;
+        LOG_ERROR << "Error in TWI: " << error;
     }
 }
 
@@ -26,7 +32,7 @@ void MCP9808::writeReg(uint8_t addr, uint16_t &data) {
     txData[1] = data >> 8; // high 8-bits
     txData[2] = data & 0x00FF; // low 8-bits
 
-    if (!TWIHS0_Write(MCP9808_I2C_BUS_ADDR, txData, 3)) {
+    if (!TWI_Write(MCP9808_I2C_BUS_ADDR, txData, 3)) {
         LOG_ERROR << "could not write reg";
     }
     wait();
@@ -35,12 +41,12 @@ void MCP9808::writeReg(uint8_t addr, uint16_t &data) {
 void MCP9808::readReg(uint8_t addr, uint16_t &result) {
     uint8_t buffer[2]; // a place to hold the incoming data
 
-    if (!TWIHS0_Write(MCP9808_I2C_BUS_ADDR, &addr, 1)) {
-//        LOG_ERROR << "could not write reg to read";
+    if (!TWI_Write(MCP9808_I2C_BUS_ADDR, &addr, 1)) {
+        LOG_ERROR << "could not write reg to read";
     }
     wait();
-    if (!TWIHS0_Read(MCP9808_I2C_BUS_ADDR, buffer, 2)) {
-//        LOG_ERROR << "could not read reg";
+    if (!TWI_Read(MCP9808_I2C_BUS_ADDR, buffer, 2)) {
+        LOG_ERROR << "could not read reg";
     }
     wait();
 

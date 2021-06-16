@@ -51,8 +51,8 @@ volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
 
-    static MCP9808 mcp9808(0);
-    mcp9808.setResolution(MCP9808_RES_0_0625C);
+    static MCP9808 mcp9808a(0);
+    static MCP9808 mcp9808b(2);
 
     AFEC0_ChannelsDisable(AFEC_CH10_MASK);
     AFEC0_ChannelGainSet(AFEC_CH11, AFEC_CHANNEL_GAIN_X1);
@@ -77,11 +77,13 @@ _Noreturn void xTask1Code(void *pvParameters){
 
         systemParameters.temperature1Value.setValue(temperature);
 
-        float externalTemperature = 0;
-        mcp9808.getTemp(externalTemperature);
+        float externalTemperature1 = 0;
+        mcp9808a.getTemp(externalTemperature1);
 
-        LOG_DEBUG << "T0 = " << temperature;
-        LOG_DEBUG << "T1 = " << externalTemperature;
+        float externalTemperature2 = 0;
+        mcp9808b.getTemp(externalTemperature2);
+
+        LOG_DEBUG << "T = " << temperature << ", " << externalTemperature1 << ", " << externalTemperature2;
     }
 
 };

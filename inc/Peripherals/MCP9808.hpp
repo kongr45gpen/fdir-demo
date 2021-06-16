@@ -4,6 +4,7 @@
 #include "MCP9808-constants.hpp"
 #include <cstdint>
 #include <arm_neon.h>
+#include <definitions.h>
 
 /**
  * MCP9808 temperature sensor driver
@@ -32,7 +33,56 @@ class MCP9808 {
      */
     uint8_t i2c;
 
-private:
+    static const int timeout = 100;
+
+    void TWI_Initialize() const {
+        if (i2c == 0) {
+            return TWIHS0_Initialize();
+        } else if (i2c == 2) {
+            return TWIHS2_Initialize();
+        }
+    }
+
+    TWIHS_ERROR TWI_ErrorGet() const {
+        if (i2c == 0) {
+            return TWIHS0_ErrorGet();
+        } else if (i2c == 2) {
+            return TWIHS2_ErrorGet();
+        }
+    }
+
+    bool TWI_IsBusy() const {
+        if (i2c == 0) {
+            return TWIHS0_IsBusy();
+        } else if (i2c == 2) {
+            return TWIHS2_IsBusy();
+        }
+    }
+
+    bool TWI_Read(uint16_t address, uint8_t *pdata, size_t length) const {
+        if (i2c == 0) {
+            return TWIHS0_Read(address, pdata, length);
+        } else if (i2c == 2) {
+            return TWIHS2_Read(address, pdata, length);
+        }
+    }
+
+    bool TWI_Write(uint16_t address, uint8_t *pdata, size_t length) const {
+        if (i2c == 0) {
+            return TWIHS0_Write(address, pdata, length);
+        } else if (i2c == 2) {
+            return TWIHS2_Write(address, pdata, length);
+        }
+    }
+
+    bool TWI_WriteRead(uint16_t address, uint8_t *wdata, size_t wlength, uint8_t *rdata, size_t rlength) const {
+        if (i2c == 0) {
+            return TWIHS0_WriteRead(address, wdata, wlength, rdata, rlength);
+        } else if (i2c == 2) {
+            return TWIHS2_WriteRead(address, wdata, wlength, rdata, rlength);
+        }
+    }
+
     /**
     * Write a value to a register (see the constants in MCP9808-constants.hpp)
     * NOTE: this writes data as they are, so be careful!
