@@ -51,10 +51,6 @@
 volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
-
-//    static MCP9808 mcp9808a(0);
-//    static MCP9808 mcp9808b(2);
-
     AFEC0_ChannelsDisable(AFEC_CH10_MASK);
     AFEC0_ChannelGainSet(AFEC_CH11, AFEC_CHANNEL_GAIN_X1);
     AFEC0_ChannelOffsetSet(AFEC_CH11, 690);
@@ -76,15 +72,7 @@ _Noreturn void xTask1Code(void *pvParameters){
             LOG_DEBUG << "Fake input activated";
         }
 
-//        systemParameters.temperature1Value.setValue(temperature);
-
-//        float externalTemperature1 = 0;
-//        mcp9808a.getTemp(externalTemperature1);
-//
-//        float externalTemperature2 = 0;
-//        mcp9808b.getTemp(externalTemperature2);
-
-//        LOG_DEBUG << "T = " << temperature << ", " << externalTemperature1 << ", " << externalTemperature2;
+        systemParameters.temperatureInternalValue.setValue(temperature);
     }
 
 };

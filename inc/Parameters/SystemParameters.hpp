@@ -6,11 +6,20 @@
 
 class SystemParameters {
 public:
+    enum class TemperatureStatus : uint8_t {
+        Nominal,
+        Timeout,
+        Disabled
+    };
+
     Parameter<float> temperature1Value{0.0};
     Parameter<float> temperature2Value{0.0};
+    Parameter<float> temperatureDelta{0.0};
+    Parameter<float> temperatureInternalValue{0.0};
 
-    Parameter<uint8_t> temperature1CommunicationFailureCount{0};
-    Parameter<uint8_t> temperature2CommunicationFailureCount{0};
+    Parameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal };
+    Parameter<TemperatureStatus> temperature2Status{ TemperatureStatus::Nominal };
+    Parameter<TemperatureStatus> temperature12Status{ TemperatureStatus::Nominal };
 
     /**
      * The key of the array is the ID of the parameter as specified in PUS
@@ -18,8 +27,11 @@ public:
     etl::array<std::reference_wrapper<ParameterBase>, ECSS_PARAMETER_COUNT> parametersArray = {
         std::ref<ParameterBase>(temperature1Value),
         std::ref<ParameterBase>(temperature2Value),
-        std::ref<ParameterBase>(temperature1CommunicationFailureCount),
-        std::ref<ParameterBase>(temperature2CommunicationFailureCount),
+        std::ref<ParameterBase>(temperatureDelta),
+        std::ref<ParameterBase>(temperature1Status),
+        std::ref<ParameterBase>(temperature2Status),
+        std::ref<ParameterBase>(temperature12Status),
+        std::ref<ParameterBase>(temperatureInternalValue),
     };
 
     SystemParameters() = default;
