@@ -34,6 +34,7 @@
 #include <Tasks/UARTRXTask.hpp>
 #include <Tasks/ECSSTask.h>
 #include <Peripherals/MCP9808.hpp>
+#include <Tasks/TemperatureTask.hpp>
 #include "definitions.h"                // SYS function prototypes
 #include "FreeRTOS.h"
 #include "task.h"
@@ -51,8 +52,8 @@ volatile int xTask1 = 1;
 
 _Noreturn void xTask1Code(void *pvParameters){
 
-    static MCP9808 mcp9808a(0);
-    static MCP9808 mcp9808b(2);
+//    static MCP9808 mcp9808a(0);
+//    static MCP9808 mcp9808b(2);
 
     AFEC0_ChannelsDisable(AFEC_CH10_MASK);
     AFEC0_ChannelGainSet(AFEC_CH11, AFEC_CHANNEL_GAIN_X1);
@@ -75,15 +76,15 @@ _Noreturn void xTask1Code(void *pvParameters){
             LOG_DEBUG << "Fake input activated";
         }
 
-        systemParameters.temperature1Value.setValue(temperature);
+//        systemParameters.temperature1Value.setValue(temperature);
 
-        float externalTemperature1 = 0;
-        mcp9808a.getTemp(externalTemperature1);
+//        float externalTemperature1 = 0;
+//        mcp9808a.getTemp(externalTemperature1);
+//
+//        float externalTemperature2 = 0;
+//        mcp9808b.getTemp(externalTemperature2);
 
-        float externalTemperature2 = 0;
-        mcp9808b.getTemp(externalTemperature2);
-
-        LOG_DEBUG << "T = " << temperature << ", " << externalTemperature1 << ", " << externalTemperature2;
+//        LOG_DEBUG << "T = " << temperature << ", " << externalTemperature1 << ", " << externalTemperature2;
     }
 
 };
@@ -97,6 +98,8 @@ static void vClassTask(void *pvParameters) {
     (static_cast<Task *>(pvParameters))->operator()();
 }
 
+std::optional<TemperatureTask> temp1;
+std::optional<TemperatureTask> temp2;
 
 int main ( void )
 {
@@ -110,11 +113,17 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
+    temp1.emplace(systemParameters.temperature1Value, 0);
+    temp2.emplace(systemParameters.temperature2Value, 2);
+
     xTaskCreate(xTask1Code, "Task1",2500, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, NULL);
 
     xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 2500, &*uartRXtask, tskIDLE_PRIORITY + 1, NULL);
+
+    xTaskCreate(vClassTask<TemperatureTask>, "T1", 1000, &*temp1, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<TemperatureTask>, "T2", 2000, &*temp2, tskIDLE_PRIORITY + 1, nullptr);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push

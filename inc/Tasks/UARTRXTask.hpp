@@ -1,5 +1,5 @@
-#ifndef FDIR_DEMO_UARTRXTASK_HPP
-#define FDIR_DEMO_UARTRXTASK_HPP
+#ifndef FDIR_DEMO_TEMPERATURETASK_HPP
+#define FDIR_DEMO_TEMPERATURETASK_HPP
 
 #include "FreeRTOS.h"
 #include <queue.h>
@@ -36,4 +36,4 @@ extern std::optional<UARTRXTask> uartRXtask;
 
 
 
-#endif //FDIR_DEMO_UARTRXTASK_HPP
+#endif //FDIR_DEMO_TEMPERATURETASK_HPP
