@@ -54,6 +54,9 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
+#pragma config TCM_CONFIGURATION = 0
+#pragma config SECURITY_BIT = CLEAR
+#pragma config BOOT_MODE = SET
 
 
 
@@ -142,6 +145,10 @@ void SYS_Initialize ( void* data )
 	RSWDT_REGS->RSWDT_MR = RSWDT_MR_WDDIS_Msk;	// Disable RSWDT 
 
 	WDT_REGS->WDT_MR = WDT_MR_WDDIS_Msk; 		// Disable WDT 
+
+	TWIHS0_Initialize();
+
+	TWIHS2_Initialize();
 
     USART1_Initialize();
 

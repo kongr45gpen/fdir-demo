@@ -31,6 +31,13 @@
             <logicalFolder name="f4" displayName="systick" projectFiles="true">
               <itemPath>../src/config/default/peripheral/systick/plib_systick.h</itemPath>
             </logicalFolder>
+            <logicalFolder name="f8" displayName="twihs" projectFiles="true">
+              <logicalFolder name="f1" displayName="master" projectFiles="true">
+                <itemPath>../src/config/default/peripheral/twihs/master/plib_twihs_master_common.h</itemPath>
+                <itemPath>../src/config/default/peripheral/twihs/master/plib_twihs0_master.h</itemPath>
+                <itemPath>../src/config/default/peripheral/twihs/master/plib_twihs2_master.h</itemPath>
+              </logicalFolder>
+            </logicalFolder>
             <logicalFolder name="f6" displayName="usart" projectFiles="true">
               <itemPath>../src/config/default/peripheral/usart/plib_usart_common.h</itemPath>
               <itemPath>../src/config/default/peripheral/usart/plib_usart1.h</itemPath>
@@ -225,6 +232,12 @@
             <logicalFolder name="f4" displayName="systick" projectFiles="true">
               <itemPath>../src/config/default/peripheral/systick/plib_systick.c</itemPath>
             </logicalFolder>
+            <logicalFolder name="f8" displayName="twihs" projectFiles="true">
+              <logicalFolder name="f1" displayName="master" projectFiles="true">
+                <itemPath>../src/config/default/peripheral/twihs/master/plib_twihs0_master.c</itemPath>
+                <itemPath>../src/config/default/peripheral/twihs/master/plib_twihs2_master.c</itemPath>
+              </logicalFolder>
+            </logicalFolder>
             <logicalFolder name="f6" displayName="usart" projectFiles="true">
               <itemPath>../src/config/default/peripheral/usart/plib_usart1.c</itemPath>
             </logicalFolder>
@@ -267,9 +280,11 @@
         <itemPath>../src/config/default/default.mhc/settings.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/afec0.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/sys_time.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/twihs0.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/efc.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/cmsis.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/HarmonyCore.yml</itemPath>
+        <itemPath>../src/config/default/default.mhc/twihs2.yml</itemPath>
         <itemPath>../src/config/default/default.mhc/GraphSettings.yml</itemPath>
       </logicalFolder>
       <itemPath>Makefile</itemPath>

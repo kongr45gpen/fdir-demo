@@ -61,6 +61,8 @@ void NonMaskableInt_Handler (void);
 void HardFault_Handler (void);
 void SysTick_Handler (void);
 void USART1_InterruptHandler (void);
+void TWIHS0_InterruptHandler (void);
+void TWIHS2_InterruptHandler (void);
 
 
 

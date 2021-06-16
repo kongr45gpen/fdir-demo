@@ -100,7 +100,6 @@ extern void USART2_Handler             ( void ) __attribute__((weak, alias("Dumm
 extern void PIOD_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void PIOE_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void HSMCI_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
-extern void TWIHS0_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void TWIHS1_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void SPI0_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void SSC_Handler                ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -122,7 +121,6 @@ extern void MCAN1_INT0_Handler         ( void ) __attribute__((weak, alias("Dumm
 extern void MCAN1_INT1_Handler         ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void GMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void AFEC1_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
-extern void TWIHS2_Handler             ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void SPI1_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void QSPI_Handler               ( void ) __attribute__((weak, alias("Dummy_Handler")));
 extern void UART2_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -194,7 +192,7 @@ const H3DeviceVectors exception_table=
     .pfnPIOD_Handler               = PIOD_Handler,
     .pfnPIOE_Handler               = PIOE_Handler,
     .pfnHSMCI_Handler              = HSMCI_Handler,
-    .pfnTWIHS0_Handler             = TWIHS0_Handler,
+    .pfnTWIHS0_Handler             = TWIHS0_InterruptHandler,
     .pfnTWIHS1_Handler             = TWIHS1_Handler,
     .pfnSPI0_Handler               = SPI0_Handler,
     .pfnSSC_Handler                = SSC_Handler,
@@ -216,7 +214,7 @@ const H3DeviceVectors exception_table=
     .pfnMCAN1_INT1_Handler         = MCAN1_INT1_Handler,
     .pfnGMAC_Handler               = GMAC_Handler,
     .pfnAFEC1_Handler              = AFEC1_Handler,
-    .pfnTWIHS2_Handler             = TWIHS2_Handler,
+    .pfnTWIHS2_Handler             = TWIHS2_InterruptHandler,
     .pfnSPI1_Handler               = SPI1_Handler,
     .pfnQSPI_Handler               = QSPI_Handler,
     .pfnUART2_Handler              = UART2_Handler,
