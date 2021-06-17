@@ -72,7 +72,7 @@ _Noreturn void xTask1Code(void *pvParameters){
             LOG_DEBUG << "Fake input activated";
         }
 
-        systemParameters.temperatureInternalValue.setValue(temperature);
+        systemParameters.temperatureInternal.setValue(temperature);
     }
 
 };
@@ -101,8 +101,8 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
-    temp1.emplace(systemParameters.temperature1Value, 0);
-    temp2.emplace(systemParameters.temperature2Value, 2);
+    temp1.emplace(systemParameters.temperature1, 0);
+    temp2.emplace(systemParameters.temperature2, 2);
 
     xTaskCreate(xTask1Code, "Task1",2500, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, NULL);

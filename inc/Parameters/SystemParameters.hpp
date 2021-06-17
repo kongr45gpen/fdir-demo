@@ -12,12 +12,12 @@ public:
         Disabled
     };
 
-    Parameter<float> temperature1Value{0.0};
-    Parameter<float> temperature2Value{0.0};
+    Parameter<float> temperature1{0.0};
+    Parameter<float> temperature2{0.0};
     FunctionParameter<float> temperatureDelta{[this]() -> float {
-        return temperature2Value.getValue() - temperature1Value.getValue();
+        return temperature2.getValue() - temperature1.getValue();
     }};
-    Parameter<float> temperatureInternalValue{0.0};
+    Parameter<float> temperatureInternal{0.0};
 
     Parameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal };
     Parameter<TemperatureStatus> temperature2Status{ TemperatureStatus::Nominal };
@@ -33,13 +33,13 @@ public:
      * The key of the array is the ID of the parameter as specified in PUS
      */
     etl::array<std::reference_wrapper<ParameterBase>, ECSS_PARAMETER_COUNT> parametersArray = {
-        std::ref<ParameterBase>(temperature1Value),
-        std::ref<ParameterBase>(temperature2Value),
+        std::ref<ParameterBase>(temperature1),
+        std::ref<ParameterBase>(temperature2),
         std::ref<ParameterBase>(temperatureDelta),
         std::ref<ParameterBase>(temperature1Status),
         std::ref<ParameterBase>(temperature2Status),
         std::ref<ParameterBase>(temperature12Status),
-        std::ref<ParameterBase>(temperatureInternalValue),
+        std::ref<ParameterBase>(temperatureInternal),
     };
 
     SystemParameters() = default;

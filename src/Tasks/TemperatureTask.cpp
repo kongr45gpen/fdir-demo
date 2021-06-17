@@ -14,6 +14,10 @@ void TemperatureTask::operator()() {
         float temperature = 0;
         mcp9808.getTemp(temperature);
 
+        if (!BTN0_Get()) {
+            temperature += 80;
+        }
+
         parameter.setValue(temperature);
 
         LOG_DEBUG << "T [" << pcTaskGetName(nullptr) << "]: " << parameter.getValue();
