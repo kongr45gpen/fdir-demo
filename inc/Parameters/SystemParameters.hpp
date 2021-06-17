@@ -21,7 +21,13 @@ public:
 
     Parameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal };
     Parameter<TemperatureStatus> temperature2Status{ TemperatureStatus::Nominal };
-    Parameter<TemperatureStatus> temperature12Status{ TemperatureStatus::Nominal };
+    FunctionParameter<TemperatureStatus> temperature12Status{[this]() {
+        if (temperature1Status.getValue() == TemperatureStatus::Nominal && temperature2Status.getValue() == TemperatureStatus::Nominal) {
+            return TemperatureStatus::Nominal;
+        } else {
+            return TemperatureStatus::Disabled;
+        }
+    }};
 
     /**
      * The key of the array is the ID of the parameter as specified in PUS
