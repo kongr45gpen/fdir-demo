@@ -14,7 +14,9 @@ public:
 
     Parameter<float> temperature1Value{0.0};
     Parameter<float> temperature2Value{0.0};
-    Parameter<float> temperatureDelta{0.0};
+    FunctionParameter<float> temperatureDelta{[this]() -> float {
+        return temperature2Value.getValue() - temperature1Value.getValue();
+    }};
     Parameter<float> temperatureInternalValue{0.0};
 
     Parameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal };
