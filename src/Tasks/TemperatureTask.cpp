@@ -2,9 +2,9 @@
 #include <ServicePool.hpp>
 #include "Tasks/TemperatureTask.hpp"
 
-TemperatureTask::TemperatureTask(Parameter<float> &parameter, uint8_t sensorI2c) : parameter(parameter), mcp9808(sensorI2c)
-{
-    parameter.setValue(10.0f);
+TemperatureTask::TemperatureTask(Parameter<float> &parameter,
+                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c)
+        : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c) {
 }
 
 void TemperatureTask::operator()() {
@@ -12,12 +12,21 @@ void TemperatureTask::operator()() {
 
     while (true) {
         float temperature = 0;
-        mcp9808.getTemp(temperature);
+        bool status = mcp9808.getTemp(temperature);
+
+        if (statusParameter.getValue() != SystemParameters::TemperatureStatus::Disabled) {
+            if (status) {
+                statusParameter.setValue(SystemParameters::TemperatureStatus::Nominal);
+            } else {
+                statusParameter.setValue(SystemParameters::TemperatureStatus::Timeout);
+            }
+        }
 
         if (!BTN0_Get()) {
             temperature += 80;
         }
 
+        // TODO: Set parameter on timeout?
         parameter.setValue(temperature);
 
         LOG_DEBUG << "T [" << pcTaskGetName(nullptr) << "]: " << parameter.getValue();

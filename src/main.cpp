@@ -101,8 +101,8 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
-    temp1.emplace(systemParameters.temperature1, 0);
-    temp2.emplace(systemParameters.temperature2, 2);
+    temp1.emplace(systemParameters.temperature1, systemParameters.temperature1Status, 0);
+    temp2.emplace(systemParameters.temperature2, systemParameters.temperature2Status, 2);
 
     xTaskCreate(xTask1Code, "Task1",2500, NULL, tskIDLE_PRIORITY + 1, NULL);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, NULL);

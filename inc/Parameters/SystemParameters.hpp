@@ -7,9 +7,9 @@
 class SystemParameters {
 public:
     enum class TemperatureStatus : uint8_t {
-        Nominal,
-        Timeout,
-        Disabled
+        Nominal = 0b01,
+        Timeout = 0b10,
+        Disabled = 0b00
     };
 
     Parameter<float> temperature1{0.0};
@@ -47,6 +47,10 @@ public:
     template<typename Value>
     Value getParameterValue(uint16_t parameterId) {
         return static_cast<ReadableParameter<Value>*>(&(parametersArray[parameterId].get()))->getValue();
+    }
+
+    uint64_t convertParameterValue(uint16_t parameterId) {
+        return parametersArray[parameterId].get().convertValue();
     }
 };
 

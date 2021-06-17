@@ -6,44 +6,49 @@
 #include <ServicePool.hpp>
 
 class SystemParameterMonitoring {
-    template <class Check>
+    template<class Check>
     using MonitoringDefinition = OnBoardMonitoringService::ParameterMonitoringDefinition<typename Check::type, Check>;
 
-    MonitoringDefinition<ExpectedValueCheck<SystemParameters::TemperatureStatus>> sensor1timeoutCheck {
-        0, 3, 500, 2, {
-            0xff, SystemParameters::TemperatureStatus::Nominal, 100
-        }
+    MonitoringDefinition<ExpectedValueCheck<SystemParameters::TemperatureStatus>> sensor1timeoutCheck{
+            0, 3, 500, 2, {
+                    0b10, SystemParameters::TemperatureStatus::Nominal, 100
+            }, {}
     };
 
-    MonitoringDefinition<ExpectedValueCheck<SystemParameters::TemperatureStatus>> sensor2timeoutCheck {
-            0, 4, 500, 2, {
-                0xff, SystemParameters::TemperatureStatus::Nominal, 100
-            }
+    MonitoringDefinition<ExpectedValueCheck<SystemParameters::TemperatureStatus>> sensor2timeoutCheck{
+            1, 4, 500, 2, {
+                    0b10, SystemParameters::TemperatureStatus::Nominal, 101
+            }, {}
     };
 
-    MonitoringDefinition<LimitCheck<float>> sensor1check {
-        4, 0, 200, 5, {
-            20,104,30,104
-        }
+    MonitoringDefinition<LimitCheck<float>> sensor1check{
+            4, 0, 200, 5, {
+                    20, 104, 30, 104
+            }, {{
+                        3, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
+                }}
     };
 
-    MonitoringDefinition<LimitCheck<float>> sensor2check {
+    MonitoringDefinition<LimitCheck<float>> sensor2check{
             5, 1, 1000, 1, {
-                    10,105,40,105
-            }
+                    10, 105, 40, 105
+            }, {{
+                        4, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
+                }}
     };
 
-    MonitoringDefinition< LimitCheck<float>> sensorDeltaCheck {
-        6, 2, 200, 5, {
-            -5, 106, 5, 106
-        }
+    MonitoringDefinition<LimitCheck<float>> sensorDeltaCheck{
+            6, 2, 200, 5, {
+                    -5, 106, 5, 106
+            }, {{
+                        5, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
+                }}
     };
-
 
 
 public:
     SystemParameterMonitoring() {
-        OnBoardMonitoringService& service = Services.onBoardMonitoring;
+        OnBoardMonitoringService &service = Services.onBoardMonitoring;
 
         service.addParameterMonitoringDefinition(sensor1timeoutCheck);
         service.addParameterMonitoringDefinition(sensor2timeoutCheck);
