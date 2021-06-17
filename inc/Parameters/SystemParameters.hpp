@@ -46,7 +46,7 @@ public:
 
     template<typename Value>
     Value getParameterValue(uint16_t parameterId) {
-        return reinterpret_cast<Parameter<Value>*>(&(parametersArray[parameterId].get()))->getValue();
+        return static_cast<ReadableParameter<Value>*>(&(parametersArray[parameterId].get()))->getValue();
     }
 };
 
