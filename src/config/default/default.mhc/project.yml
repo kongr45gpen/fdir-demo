@@ -83,20 +83,20 @@ files:
   security: NON_SECURE
   type: SOURCE
   userChecksum: EAA78630DDBD7CA45CB7F529A341C3EC
-- generatedChecksum: 618A850993F2C71CF51F61BBED137616
+- generatedChecksum: AD9E5D8957ADDF3C5B579114051BE96B
   logicalPath: config/default/peripheral/twihs/master
   name: plib_twihs0_master.c
   physicalPath: peripheral/twihs/master
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 618A850993F2C71CF51F61BBED137616
-- generatedChecksum: 8012E46EDC89A8706D4255581ADD97F0
+  userChecksum: AD9E5D8957ADDF3C5B579114051BE96B
+- generatedChecksum: 24304E3E8C225A7ECA10903D555248F8
   logicalPath: config/default/peripheral/twihs/master
   name: plib_twihs2_master.c
   physicalPath: peripheral/twihs/master
   security: NON_SECURE
   type: SOURCE
-  userChecksum: 8012E46EDC89A8706D4255581ADD97F0
+  userChecksum: 24304E3E8C225A7ECA10903D555248F8
 - generatedChecksum: 3FC92DC9614C3C2528E4705C24CB39E1
   logicalPath: config/default/peripheral/usart
   name: plib_usart1.c

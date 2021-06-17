@@ -53,24 +53,6 @@ children:
         attributes: {id: enabled}
         children:
         - {type: Value, value: 'true'}
-  - type: File
-    attributes: {id: DRIVER_COMMON}
-    children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: enabled}
-        children:
-        - {type: Value, value: 'false'}
-  - type: File
-    attributes: {id: DRIVER_ROOT}
-    children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: enabled}
-        children:
-        - {type: Value, value: 'false'}
   - type: Boolean
     attributes: {id: ENABLE_APP_FILE}
     children:
@@ -81,12 +63,6 @@ children:
   - type: Boolean
     attributes: {id: ENABLE_DRV_COMMON}
     children:
-    - type: Attributes
-      children:
-      - type: Boolean
-        attributes: {id: readOnly}
-        children:
-        - {type: Value, value: 'false'}
     - type: Values
       children:
       - type: Dynamic
