@@ -4,8 +4,6 @@ std::optional<UARTTask> uartTask;
 
 
 void UARTTask::operator()() {
-    static StringType buffer;
-
     while (true) {
         if (queue.pop(buffer)) {
             USART1_Write(buffer.data(), buffer.size());

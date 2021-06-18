@@ -49,6 +49,8 @@ private:
     etl::function_mv<QueueLock, &QueueLock::lock>   lock;
     etl::function_mv<QueueLock, &QueueLock::unlock> unlock;
     etl::queue_spsc_locked<etl::string<StringSize>, Capacity, etl::memory_model::MEMORY_MODEL_SMALL> queue;
+
+    StringType buffer;
 };
 
 extern std::optional<UARTTask> uartTask;

@@ -28,7 +28,8 @@ private:
 
     QueueHandle_t rxQueue;
 
-    Message buffer{};
+    static Message buffer1;
+    Message buffer2{};
     etl::string<MaxInputSize> cobsBuffer;
 };
 

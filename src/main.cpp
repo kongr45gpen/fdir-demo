@@ -80,11 +80,11 @@ int main ( void )
     xTaskCreate(vClassTask<InternalTemperatureTask>, "Internal_Temp",2500, &*tempInternal, tskIDLE_PRIORITY + 1, nullptr);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, nullptr);
 
-    xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 1000, &*uartTask, tskIDLE_PRIORITY + 1, nullptr);
-    xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 2500, &*uartRXtask, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 3000, &*uartTask, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 6000, &*uartRXtask, tskIDLE_PRIORITY + 1, nullptr);
 
-    xTaskCreate(vClassTask<TemperatureTask>, "T1", 1000, &*temp1, tskIDLE_PRIORITY + 1, nullptr);
-    xTaskCreate(vClassTask<TemperatureTask>, "T2", 2000, &*temp2, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<TemperatureTask>, "T1", 1500, &*temp1, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<TemperatureTask>, "T2", 1500, &*temp2, tskIDLE_PRIORITY + 1, nullptr);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push

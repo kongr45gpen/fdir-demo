@@ -8,6 +8,7 @@
 using ECSSMessage = Message;
 
 std::optional<UARTRXTask> uartRXtask;
+UARTRXTask::Message UARTRXTask::buffer1;
 
 UARTRXTask::UARTRXTask() {
     rxQueue = xQueueCreate(Capacity, sizeof(Message));
@@ -23,10 +24,10 @@ UARTRXTask::UARTRXTask() {
             // ???
         } else if (rxTask->currentRXbyte == 0 || rxTask->currentRXbyte == '\r') {
             // Message complete, copy to queue
-            Message message;
+            new (&(UARTRXTask::buffer1)) Message{};
             // Double copy: Not very fun
-            memcpy(message.message, rxTask->currentRXbuffer, rxTask->currentReadLocation + 1);
-            xQueueSendToBackFromISR(rxTask->rxQueue, static_cast<void*>(&message), nullptr);
+            memcpy(buffer1.message, rxTask->currentRXbuffer, rxTask->currentReadLocation + 1);
+            xQueueSendToBackFromISR(rxTask->rxQueue, static_cast<void*>(&buffer1), nullptr);
 
             rxTask->currentReadLocation = 0;
         } else {
@@ -45,14 +46,14 @@ UARTRXTask::UARTRXTask() {
 
 void UARTRXTask::operator()() {
     while (true) {
-        xQueueReceive(rxQueue, static_cast<void*>(&buffer), portMAX_DELAY);
+        xQueueReceive(rxQueue, static_cast<void*>(&buffer2), portMAX_DELAY);
 
         if (overRun) {
             overRun = false;
             LOG_ERROR << "RX too large message";
         }
 
-        cobsBuffer = COBSdecode<MaxInputSize>(reinterpret_cast<uint8_t*>(buffer.message), MaxInputSize);
+        cobsBuffer = COBSdecode<MaxInputSize>(reinterpret_cast<uint8_t*>(buffer2.message), MaxInputSize);
 
         ECSSMessage ecss = MessageParser::parseECSSTC(reinterpret_cast<const uint8_t*>(cobsBuffer.c_str()));
 

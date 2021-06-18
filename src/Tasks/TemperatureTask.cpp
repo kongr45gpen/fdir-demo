@@ -11,8 +11,11 @@ void TemperatureTask::operator()() {
     LOG_WARNING << parameter.getValue();
 
     while (true) {
+        vTaskDelay(130);
+
         if (statusParameter.getValue() == SystemParameters::TemperatureStatus::Disabled) {
             PIO_PinWrite(sensorPin, false);
+            continue;
         } else {
             PIO_PinWrite(sensorPin, true);
         }
@@ -24,12 +27,10 @@ void TemperatureTask::operator()() {
             status = mcp9808.getTemp(temperature);
         }
 
-        if (statusParameter.getValue() != SystemParameters::TemperatureStatus::Disabled) {
-            if (status) {
-                statusParameter.setValue(SystemParameters::TemperatureStatus::Nominal);
-            } else {
-                statusParameter.setValue(SystemParameters::TemperatureStatus::Timeout);
-            }
+        if (status) {
+            statusParameter.setValue(SystemParameters::TemperatureStatus::Nominal);
+        } else {
+            statusParameter.setValue(SystemParameters::TemperatureStatus::Timeout);
         }
 
         if (!PIO_PinRead(buttonPin)) {
@@ -40,7 +41,5 @@ void TemperatureTask::operator()() {
         parameter.setValue(temperature);
 
         LOG_DEBUG << "T [" << pcTaskGetName(nullptr) << "]: " << parameter.getValue();
-
-        vTaskDelay(130);
     }
 }
