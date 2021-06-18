@@ -3,8 +3,8 @@
 #include "Tasks/TemperatureTask.hpp"
 
 TemperatureTask::TemperatureTask(Parameter<float> &parameter,
-                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c)
-        : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c) {
+                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c, PIO_PIN buttonPin)
+        : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c), buttonPin(buttonPin) {
 }
 
 void TemperatureTask::operator()() {
@@ -26,7 +26,7 @@ void TemperatureTask::operator()() {
             }
         }
 
-        if (!BTN0_Get()) {
+        if (!PIO_PinRead(buttonPin)) {
             temperature += 80;
         }
 
