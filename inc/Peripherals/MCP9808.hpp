@@ -184,6 +184,11 @@ public:
     bool setAlertMode(uint16_t setting);
 
     /**
+     * Returns true if the manufacturer ID is OK, and false if there is an error or an unexpected value
+     */
+    bool isIDok();
+
+    /**
     * Set the interrupts to be cleared on the next read attempt (namely, a temperature
     * reading or a command in general)
     */

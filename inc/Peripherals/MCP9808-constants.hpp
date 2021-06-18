@@ -86,6 +86,9 @@
 // Custom bus address (for usage in read-write requests)
 #define MCP9808_I2C_BUS_ADDR (static_cast<uint16_t>((MCP9808_I2C_BASE_ADDR & MCP9808_I2C_USER_ADDR_MASK) | MCP9808_I2C_USER_ADDR))
 
+// Manufacturer ID
+#define MCP9808_MANUFACTURER_ID                         (0x0054u)
+
 // Hysteresis temperature mask
 #define MCP9808_CONFIG_THYST_MASK                       (0xF9FFu)
 

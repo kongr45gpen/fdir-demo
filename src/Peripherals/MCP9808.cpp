@@ -58,6 +58,16 @@ bool MCP9808::setResolution(uint16_t setting) {
 
 }
 
+bool MCP9808::isIDok() {
+    uint16_t id;
+
+    if (!readReg(MCP9808_REG_MFGID, id)) {
+        return false;
+    }
+
+    return id == MCP9808_MANUFACTURER_ID;
+}
+
 bool MCP9808::getTemp(float32_t& result) {
     uint16_t data;
     if (!readReg(MCP9808_REG_TEMP, data)) {

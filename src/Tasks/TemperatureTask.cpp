@@ -12,7 +12,11 @@ void TemperatureTask::operator()() {
 
     while (true) {
         float temperature = 0;
-        bool status = mcp9808.getTemp(temperature);
+        bool status = mcp9808.isIDok();
+
+        if (status) {
+            status = mcp9808.getTemp(temperature);
+        }
 
         if (statusParameter.getValue() != SystemParameters::TemperatureStatus::Disabled) {
             if (status) {
