@@ -29,6 +29,8 @@ public:
         }
     }};
 
+    FunctionParameter<uint32_t> tick{SystemParameters::getTick};
+
     /**
      * The key of the array is the ID of the parameter as specified in PUS
      */
@@ -40,6 +42,7 @@ public:
         std::ref<ParameterBase>(temperature2Status),
         std::ref<ParameterBase>(temperature12Status),
         std::ref<ParameterBase>(temperatureInternal),
+        std::ref<ParameterBase>(tick)
     };
 
     SystemParameters() = default;
@@ -52,6 +55,8 @@ public:
     uint64_t convertParameterValue(uint16_t parameterId) {
         return parametersArray[parameterId].get().convertValue();
     }
+private:
+    static uint32_t getTick();
 };
 
 extern SystemParameters systemParameters;
