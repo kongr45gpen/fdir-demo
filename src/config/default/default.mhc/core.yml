@@ -478,6 +478,34 @@ children:
       - type: User
         attributes: {value: D}
   - type: String
+    attributes: {id: PIN_117_DIR}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: Out}
+  - type: String
+    attributes: {id: PIN_117_FUNCTION_NAME}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: SENS2}
+  - type: String
+    attributes: {id: PIN_117_FUNCTION_TYPE}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
+    attributes: {id: PIN_117_PERIPHERAL_FUNCTION}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
     attributes: {id: PIN_119_FUNCTION_TYPE}
     children:
     - type: Values
@@ -630,7 +658,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: 'True'}
+        attributes: {value: ''}
   - type: String
     attributes: {id: PIN_71_DRIVER}
     children:
@@ -665,7 +693,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: 'True'}
+        attributes: {value: ''}
   - type: String
     attributes: {id: PIN_75_FUNCTION_NAME}
     children:
@@ -707,7 +735,7 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: 'True'}
+        attributes: {value: ''}
   - type: String
     attributes: {id: PIN_79_FUNCTION_TYPE}
     children:
@@ -777,7 +805,35 @@ children:
     - type: Values
       children:
       - type: User
-        attributes: {value: 'True'}
+        attributes: {value: ''}
+  - type: String
+    attributes: {id: PIN_93_DIR}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: Out}
+  - type: String
+    attributes: {id: PIN_93_FUNCTION_NAME}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: SENS1}
+  - type: String
+    attributes: {id: PIN_93_FUNCTION_TYPE}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
+  - type: String
+    attributes: {id: PIN_93_PERIPHERAL_FUNCTION}
+    children:
+    - type: Values
+      children:
+      - type: User
+        attributes: {value: GPIO}
   - type: Hex
     attributes: {id: PIOA_ABCDSR1_VALUE}
     children:
@@ -812,7 +868,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '8388608'}
+        attributes: {id: core, value: '8388612'}
   - type: Hex
     attributes: {id: PIOA_PDR_VALUE}
     children:
@@ -826,7 +882,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '24'}
+        attributes: {id: core, value: '0'}
   - type: Hex
     attributes: {id: PIOB_ABCDSR1_VALUE}
     children:
@@ -862,6 +918,20 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '16'}
+  - type: Hex
+    attributes: {id: PIOC_ABCDSR1_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0'}
+  - type: Hex
+    attributes: {id: PIOC_ABCDSR2_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0'}
   - type: Boolean
     attributes: {id: PIOC_CLOCK_ENABLE}
     children:
@@ -876,6 +946,20 @@ children:
       children:
       - type: Dynamic
         attributes: {id: core, value: '150000000'}
+  - type: Hex
+    attributes: {id: PIOC_OER_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '524288'}
+  - type: Hex
+    attributes: {id: PIOC_PDR_VALUE}
+    children:
+    - type: Values
+      children:
+      - type: Dynamic
+        attributes: {id: core, value: '0'}
   - type: Hex
     attributes: {id: PIOD_ABCDSR1_VALUE}
     children:
@@ -931,7 +1015,7 @@ children:
     - type: Values
       children:
       - type: Dynamic
-        attributes: {id: core, value: '402653184'}
+        attributes: {id: core, value: '0'}
   - type: Boolean
     attributes: {id: PIOE_CLOCK_ENABLE}
     children:

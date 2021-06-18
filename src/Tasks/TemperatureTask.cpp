@@ -3,14 +3,20 @@
 #include "Tasks/TemperatureTask.hpp"
 
 TemperatureTask::TemperatureTask(Parameter<float> &parameter,
-                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c, PIO_PIN buttonPin)
-        : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c), buttonPin(buttonPin) {
+                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c, PIO_PIN sensorPin, PIO_PIN buttonPin)
+        : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c), sensorPin(sensorPin), buttonPin(buttonPin) {
 }
 
 void TemperatureTask::operator()() {
     LOG_WARNING << parameter.getValue();
 
     while (true) {
+        if (statusParameter.getValue() == SystemParameters::TemperatureStatus::Disabled) {
+            PIO_PinWrite(sensorPin, false);
+        } else {
+            PIO_PinWrite(sensorPin, true);
+        }
+
         float temperature = 0;
         bool status = mcp9808.isIDok();
 

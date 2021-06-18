@@ -74,8 +74,8 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
-    temp1.emplace(systemParameters.temperature1, systemParameters.temperature1Status, 0, BTN0_PIN);
-    temp2.emplace(systemParameters.temperature2, systemParameters.temperature2Status, 2, BT1_PIN);
+    temp1.emplace(systemParameters.temperature1, systemParameters.temperature1Status, 0, SENS1_PIN, BTN0_PIN);
+    temp2.emplace(systemParameters.temperature2, systemParameters.temperature2Status, 2, SENS2_PIN, BT1_PIN);
 
     xTaskCreate(vClassTask<InternalTemperatureTask>, "Internal_Temp",2500, &*tempInternal, tskIDLE_PRIORITY + 1, nullptr);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, nullptr);

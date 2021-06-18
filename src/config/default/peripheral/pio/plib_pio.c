@@ -68,15 +68,14 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_A)->PIO_PER = ~0x200018;
     ((pio_registers_t*)PIO_PORT_A)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTA Pull Up Enable/Disable as per MHC selection */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_PUDR = ~0x18;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_PUER = 0x18;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_PUDR = 0xFFFFFFFF;
     /* PORTA Pull Down Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_A)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTA Output Write Enable */
     ((pio_registers_t*)PIO_PORT_A)->PIO_OWER = PIO_OWER_Msk;
     /* PORTA Output Direction Enable */
-    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x800000;
-    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x800000;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_OER = 0x800004;
+    ((pio_registers_t*)PIO_PORT_A)->PIO_ODR = ~0x800004;
     /* PORTA Initial state High */
     ((pio_registers_t*)PIO_PORT_A)->PIO_ODSR = 0x0;
     /* PORTA drive control */
@@ -114,8 +113,8 @@ void PIO_Initialize ( void )
     /* PORTC Output Write Enable */
     ((pio_registers_t*)PIO_PORT_C)->PIO_OWER = PIO_OWER_Msk;
     /* PORTC Output Direction Enable */
-    ((pio_registers_t*)PIO_PORT_C)->PIO_OER = 0x0;
-    ((pio_registers_t*)PIO_PORT_C)->PIO_ODR = ~0x0;
+    ((pio_registers_t*)PIO_PORT_C)->PIO_OER = 0x80000;
+    ((pio_registers_t*)PIO_PORT_C)->PIO_ODR = ~0x80000;
     /* PORTC Initial state High */
     ((pio_registers_t*)PIO_PORT_C)->PIO_ODSR = 0x0;
     /* PORTC drive control */
@@ -130,8 +129,7 @@ void PIO_Initialize ( void )
     ((pio_registers_t*)PIO_PORT_D)->PIO_PER = ~0x180001f0;
     ((pio_registers_t*)PIO_PORT_D)->PIO_MDDR = 0xFFFFFFFF;
     /* PORTD Pull Up Enable/Disable as per MHC selection */
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = ~0x18000000;
-    ((pio_registers_t*)PIO_PORT_D)->PIO_PUER = 0x18000000;
+    ((pio_registers_t*)PIO_PORT_D)->PIO_PUDR = 0xFFFFFFFF;
     /* PORTD Pull Down Enable/Disable as per MHC selection */
     ((pio_registers_t*)PIO_PORT_D)->PIO_PPDDR = 0xFFFFFFFF;
     /* PORTD Output Write Enable */

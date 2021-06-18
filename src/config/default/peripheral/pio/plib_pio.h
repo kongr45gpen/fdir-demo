@@ -89,6 +89,24 @@
 #define BT1_Get()               ((PIOB_REGS->PIO_PDSR >> 12) & 0x1)
 #define BT1_PIN                  PIO_PIN_PB12
 
+/*** Macros for SENS1 pin ***/
+#define SENS1_Set()               (PIOA_REGS->PIO_SODR = (1<<2))
+#define SENS1_Clear()             (PIOA_REGS->PIO_CODR = (1<<2))
+#define SENS1_Toggle()            (PIOA_REGS->PIO_ODSR ^= (1<<2))
+#define SENS1_OutputEnable()      (PIOA_REGS->PIO_OER = (1<<2))
+#define SENS1_InputEnable()       (PIOA_REGS->PIO_ODR = (1<<2))
+#define SENS1_Get()               ((PIOA_REGS->PIO_PDSR >> 2) & 0x1)
+#define SENS1_PIN                  PIO_PIN_PA2
+
+/*** Macros for SENS2 pin ***/
+#define SENS2_Set()               (PIOC_REGS->PIO_SODR = (1<<19))
+#define SENS2_Clear()             (PIOC_REGS->PIO_CODR = (1<<19))
+#define SENS2_Toggle()            (PIOC_REGS->PIO_ODSR ^= (1<<19))
+#define SENS2_OutputEnable()      (PIOC_REGS->PIO_OER = (1<<19))
+#define SENS2_InputEnable()       (PIOC_REGS->PIO_ODR = (1<<19))
+#define SENS2_Get()               ((PIOC_REGS->PIO_PDSR >> 19) & 0x1)
+#define SENS2_PIN                  PIO_PIN_PC19
+
 
 // *****************************************************************************
 /* PIO Port
