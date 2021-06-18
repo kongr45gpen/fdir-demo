@@ -8,6 +8,8 @@
 std::optional<ECSSTask> ecssTask;
 
 void ECSSTask::operator()() {
+    Services.eventReport.informativeEventReport(EventReportService::MCUStart, "");
+
     for(;;) {
         pinval = PIO_PinRead(PIO_PIN_PA23);
         vTaskDelay(pdMS_TO_TICKS(1));
