@@ -58,8 +58,8 @@ static void vClassTask(void *pvParameters) {
     (static_cast<Task *>(pvParameters))->operator()();
 }
 
-std::optional<TemperatureTask> temp1;
-std::optional<TemperatureTask> temp2;
+std::optional<TemperatureTask> temp1task;
+std::optional<TemperatureTask> temp2task;
 std::optional<InternalTemperatureTask> tempInternal;
 
 int main ( void )
@@ -74,8 +74,8 @@ int main ( void )
     uartRXtask.emplace();
     ecssTask.emplace();
 
-    temp1.emplace(systemParameters.temperature1, systemParameters.temperature1Status, 0, SENS1_PIN, BTN0_PIN);
-    temp2.emplace(systemParameters.temperature2, systemParameters.temperature2Status, 2, SENS2_PIN, BT1_PIN);
+    temp1task.emplace(systemParameters.temperature1, systemParameters.temperature1Status, 0, SENS1_PIN, BTN0_PIN);
+    temp2task.emplace(systemParameters.temperature2, systemParameters.temperature2Status, 2, SENS2_PIN, BT1_PIN);
 
     xTaskCreate(vClassTask<InternalTemperatureTask>, "Internal_Temp",2500, &*tempInternal, tskIDLE_PRIORITY + 1, nullptr);
     xTaskCreate(vClassTask<ECSSTask>, "ECSS",3000, &*ecssTask, tskIDLE_PRIORITY + 1, nullptr);
@@ -83,8 +83,8 @@ int main ( void )
     xTaskCreate(vClassTask<UARTTask>, "UART_Tx", 3000, &*uartTask, tskIDLE_PRIORITY + 1, nullptr);
     xTaskCreate(vClassTask<UARTRXTask>, "UART_Rx", 6000, &*uartRXtask, tskIDLE_PRIORITY + 1, nullptr);
 
-    xTaskCreate(vClassTask<TemperatureTask>, "T1", 1500, &*temp1, tskIDLE_PRIORITY + 1, nullptr);
-    xTaskCreate(vClassTask<TemperatureTask>, "T2", 1500, &*temp2, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<TemperatureTask>, "T1", 1500, &*temp1task, tskIDLE_PRIORITY + 1, nullptr);
+    xTaskCreate(vClassTask<TemperatureTask>, "T2", 1500, &*temp2task, tskIDLE_PRIORITY + 1, nullptr);
 
     vTaskStartScheduler();
 #pragma clang diagnostic push

@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <Services/Parameter.hpp>
+#include <Logger.hpp>
 
 class SystemParameters {
 public:
@@ -19,8 +20,8 @@ public:
     }};
     Parameter<float> temperatureInternal{0.0};
 
-    Parameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal };
-    Parameter<TemperatureStatus> temperature2Status{ TemperatureStatus::Nominal };
+    CallbackParameter<TemperatureStatus> temperature1Status{ TemperatureStatus::Nominal, temperature1StatusCallback};
+    CallbackParameter<TemperatureStatus> temperature2Status{ TemperatureStatus::Nominal, temperature2StatusCallback};
     FunctionParameter<TemperatureStatus> temperature12Status{[this]() {
         if (temperature1Status.getValue() == TemperatureStatus::Nominal && temperature2Status.getValue() == TemperatureStatus::Nominal) {
             return TemperatureStatus::Nominal;
@@ -57,6 +58,8 @@ public:
     }
 private:
     static uint32_t getTick();
+    static void temperature1StatusCallback(TemperatureStatus& status);
+    static void temperature2StatusCallback(TemperatureStatus& status);
 };
 
 extern SystemParameters systemParameters;

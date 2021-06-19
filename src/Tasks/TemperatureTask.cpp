@@ -3,22 +3,16 @@
 #include "Tasks/TemperatureTask.hpp"
 
 TemperatureTask::TemperatureTask(Parameter<float> &parameter,
-                                 Parameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c, PIO_PIN sensorPin, PIO_PIN buttonPin)
+                                 CallbackParameter<SystemParameters::TemperatureStatus> &statusParameter, uint8_t sensorI2c, PIO_PIN sensorPin, PIO_PIN buttonPin)
         : parameter(parameter), statusParameter(statusParameter), mcp9808(sensorI2c), sensorPin(sensorPin), buttonPin(buttonPin) {
+    PIO_PinWrite(sensorPin, true);
 }
 
 void TemperatureTask::operator()() {
-    LOG_WARNING << parameter.getValue();
+    taskHandle = xTaskGetCurrentTaskHandle();
 
     while (true) {
         vTaskDelay(130);
-
-        if (statusParameter.getValue() == SystemParameters::TemperatureStatus::Disabled) {
-            PIO_PinWrite(sensorPin, false);
-            continue;
-        } else {
-            PIO_PinWrite(sensorPin, true);
-        }
 
         float temperature = 0;
         bool status = mcp9808.isIDok();
@@ -41,5 +35,17 @@ void TemperatureTask::operator()() {
         parameter.setValue(temperature);
 
         LOG_DEBUG << "T [" << pcTaskGetName(nullptr) << "]: " << parameter.getValue();
+    }
+}
+
+void TemperatureTask::setOutput(bool output) {
+    PIO_PinWrite(sensorPin, output);
+
+    if (taskHandle != nullptr) {
+        if (output) {
+            vTaskResume(taskHandle);
+        } else {
+            vTaskSuspend(taskHandle);
+        }
     }
 }
