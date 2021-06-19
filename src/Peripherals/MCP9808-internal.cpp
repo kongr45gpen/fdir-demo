@@ -39,7 +39,9 @@ bool MCP9808::writeReg(uint8_t addr, uint16_t &data) {
         LOG_ERROR << "could not write reg";
         return false;
     }
-    wait();
+    if (!wait()) {
+        return false;
+    }
 
     return true;
 }
