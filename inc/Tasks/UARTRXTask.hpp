@@ -13,6 +13,22 @@ public:
     void operator()();
 
     UARTRXTask();
+
+    __attribute__ ((optimize("-Ofast")))
+    void ingress() {
+        if (currentRXbyte == 0) {
+            xQueueSendToBackFromISR(rxQueue, static_cast<void *>(&buffer1), nullptr);
+            currentReadLocation = 0;
+            new(&(UARTRXTask::buffer1)) UARTRXTask::Message{};
+        } else {
+            if (currentReadLocation == MaxInputSize) {
+                overRun = true;
+                currentReadLocation = 0;
+            } else {
+                buffer1.message[currentReadLocation++] = currentRXbyte;
+            }
+        }
+    }
 private:
     struct Message {
         char message[MaxInputSize];
@@ -21,7 +37,6 @@ private:
     static constexpr int Capacity = 10;
 
     char currentRXbyte;
-    char currentRXbuffer[MaxInputSize];
     int currentReadLocation = 0;
 
     std::atomic<bool> overRun = false;
@@ -34,7 +49,6 @@ private:
 };
 
 extern std::optional<UARTRXTask> uartRXtask;
-
 
 
 #endif //FDIR_DEMO_TEMPERATURETASK_HPP

@@ -18,25 +18,12 @@ UARTRXTask::UARTRXTask() {
     USART1_ReadCallbackRegister([](uintptr_t object) {
         // This function is called whenever a single byte arrives
 
-        auto rxTask = reinterpret_cast<UARTRXTask*>(object); // don't ask
+        auto rxTask = reinterpret_cast<UARTRXTask*>(object); // Work-around through library API to pass object
 
         if (USART1_ReadCountGet() == 0) {
-            // ???
-        } else if (rxTask->currentRXbyte == 0 || rxTask->currentRXbyte == '\r') {
-            // Message complete, copy to queue
-            new (&(UARTRXTask::buffer1)) Message{};
-            // Double copy: Not very fun
-            memcpy(buffer1.message, rxTask->currentRXbuffer, rxTask->currentReadLocation + 1);
-            xQueueSendToBackFromISR(rxTask->rxQueue, static_cast<void*>(&buffer1), nullptr);
-
-            rxTask->currentReadLocation = 0;
+            // Some error occurred
         } else {
-            if (rxTask->currentReadLocation == MaxInputSize) {
-                rxTask->overRun = true;
-                rxTask->currentReadLocation = 0;
-            } else {
-                rxTask->currentRXbuffer[rxTask->currentReadLocation++] = rxTask->currentRXbyte;
-            }
+            rxTask->ingress();
         }
 
         // Initiate next read
