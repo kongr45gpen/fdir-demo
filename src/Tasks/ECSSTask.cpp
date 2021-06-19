@@ -3,6 +3,7 @@
 #include <definitions.h>
 #include <ServicePool.hpp>
 #include <task.h>
+#include <main.hpp>
 #include "Tasks/ECSSTask.h"
 
 std::optional<ECSSTask> ecssTask;
@@ -23,6 +24,22 @@ void ECSSTask::operator()() {
 ECSSTask::ECSSTask() {
     Services.functionManagement.include("restart", [](String<ECSS_FUNCTION_MAX_ARG_LENGTH>){
         NVIC_SystemReset();
+    });
+
+    Services.functionManagement.include("restart_sensor", [](String<ECSS_FUNCTION_MAX_ARG_LENGTH> args) {
+        char sensor = args[0];
+
+        if (sensor == '1' || sensor == '3') {
+            if (temp1task) {
+                temp1task->restart();
+            }
+        }
+
+        if (sensor == '2' || sensor == '3') {
+            if (temp2task) {
+                temp2task->restart();
+            }
+        }
     });
 }
 #pragma clang diagnostic pop

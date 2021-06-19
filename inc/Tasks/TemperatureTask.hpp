@@ -16,6 +16,7 @@ public:
     TemperatureTask(Parameter<float>& parameter, CallbackParameter<SystemParameters::TemperatureStatus>& statusParameter, uint8_t sensorI2c, PIO_PIN sensorPin, PIO_PIN buttonPin);
 
     void setOutput(bool output);
+    void restart();
 private:
     Parameter<float>& parameter;
     CallbackParameter<SystemParameters::TemperatureStatus>& statusParameter;

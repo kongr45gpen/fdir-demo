@@ -45,7 +45,21 @@ void TemperatureTask::setOutput(bool output) {
         if (output) {
             vTaskResume(taskHandle);
         } else {
+            // TODO: When suspending the task, the I2C peripheral should also be restarted, otherwise we run the risk of
+            // spurious timeout in case we blocked an I2C transaction
             vTaskSuspend(taskHandle);
         }
+    }
+}
+
+void TemperatureTask::restart() {
+    if (statusParameter.getValue() != SystemParameters::TemperatureStatus::Disabled) {
+        setOutput(false);
+        vTaskDelay(100);
+    }
+
+    // Second check, in case the parameter was somehow set during the delay
+    if (statusParameter.getValue() != SystemParameters::TemperatureStatus::Disabled) {
+        setOutput(true);
     }
 }
