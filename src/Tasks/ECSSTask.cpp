@@ -24,28 +24,44 @@ void ECSSTask::operator()() {
 
 ECSSTask::ECSSTask() {
     auto &Function = Services.functionManagement;
+    auto &Parameter = Services.parameterManagement;
+
+    auto compose = [](auto && PH1) { return MessageParser::composeArbitraryECSS<64>(std::forward<decltype(PH1)>(PH1), 0); };
 
     Services.functionManagement.include("restart", functionRestart);
     Services.functionManagement.include("restart_sensor", functionRestartSensor);
 
     Services.eventAction.addEventActionDefinition(
-            {0, 100, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart_sensor", "1"))});
+            {0, 100, 0, compose(Function.callFromGround("restart_sensor", "1"))});
     Services.eventAction.addEventActionDefinition(
-            {0, 101, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart_sensor", "1"))});
+            {0, 101, 1, compose(Function.callFromGround("restart_sensor", "2"))});
     Services.eventAction.addEventActionDefinition(
-            {0, 104, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart_sensor", "1"))});
+            {0, 102, 2, compose(Parameter.setParameterFromGround(systemParameters.temperature1Status, SystemParameters::TemperatureStatus::Disabled))});
     Services.eventAction.addEventActionDefinition(
-            {0, 105, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart_sensor", "2"))});
+            {0, 103, 3, compose(Parameter.setParameterFromGround(systemParameters.temperature2Status, SystemParameters::TemperatureStatus::Disabled))});
     Services.eventAction.addEventActionDefinition(
-            {0, 106, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart_sensor", "3"))});
+            {0, 104, 4, compose(Function.callFromGround("restart_sensor", "1"))});
     Services.eventAction.addEventActionDefinition(
-            {0, 110, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart"))});
+            {0, 105, 5, compose(Function.callFromGround("restart_sensor", "2"))});
     Services.eventAction.addEventActionDefinition(
-            {0, 111, 0, MessageParser::composeArbitraryECSS<64>(Function.callFromGround("restart"))});
+            {0, 106, 6, compose(Function.callFromGround("restart_sensor", "3"))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 107, 7, compose(Parameter.setParameterFromGround(systemParameters.temperature1Status, SystemParameters::TemperatureStatus::Disabled))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 108, 8, compose(Parameter.setParameterFromGround(systemParameters.temperature2Status, SystemParameters::TemperatureStatus::Disabled))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 109, 9, compose(Parameter.setParameterFromGround(systemParameters.temperature1Status, SystemParameters::TemperatureStatus::Disabled))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 109, 10, compose(Parameter.setParameterFromGround(systemParameters.temperature2Status, SystemParameters::TemperatureStatus::Disabled))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 110, 11, compose(Function.callFromGround("restart"))});
+    Services.eventAction.addEventActionDefinition(
+            {0, 111, 12, compose(Function.callFromGround("restart"))});
 
 }
 
 void ECSSTask::functionRestart(String<16> args) {
+    vTaskDelay(100);
     NVIC_SystemReset();
 }
 

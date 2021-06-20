@@ -46,7 +46,7 @@ public:
         std::ref<ParameterBase>(tick)
     };
 
-    SystemParameters() = default;
+    SystemParameters();
 
     template<typename Value>
     Value getParameterValue(uint16_t parameterId) {

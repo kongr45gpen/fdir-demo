@@ -20,3 +20,10 @@ void SystemParameters::temperature2StatusCallback(SystemParameters::TemperatureS
         temp2task->setOutput(status != TemperatureStatus::Disabled);
     }
 }
+
+SystemParameters::SystemParameters() {
+    uint16_t i = 0;
+    for (auto& it : parametersArray) {
+        it.get().id = i++;
+    }
+}
