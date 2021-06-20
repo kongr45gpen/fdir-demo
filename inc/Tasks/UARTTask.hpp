@@ -43,7 +43,7 @@ public:
         queue.push(string);
     }
 private:
-    static constexpr int Capacity = 30;
+    static constexpr int Capacity = 40;
 
     QueueLock uartQueueLock;
     etl::function_mv<QueueLock, &QueueLock::lock>   lock;
