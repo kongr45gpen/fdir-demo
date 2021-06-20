@@ -66,7 +66,7 @@ class SystemParameterMonitoring {
     };
 
     MonitoringDefinition<LimitCheck<float>> sensorDeltaCheck{
-            6, 2, 500, 3, {
+            6, 2, 500, 6, {
                     -5, 106, 5, 106
             }, {{
                         5, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
@@ -74,7 +74,7 @@ class SystemParameterMonitoring {
     };
 
     MonitoringDefinition<LimitCheck<float>> sensorDeltaPermanentCheck{
-            9, 2, 200, 6, {
+            9, 2, 500, 11, {
                     -5, 109, 5, 109
             }, {{
                         5, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
@@ -82,7 +82,7 @@ class SystemParameterMonitoring {
     };
 
     MonitoringDefinition<LimitCheck<float>> subsystemSafety1check{
-            10, 0, 500, 6, {
+            10, 0, 500, 12, {
                     -std::numeric_limits<float>::infinity(), 110, 50, 110
             }, {{
                         3, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)
@@ -90,7 +90,7 @@ class SystemParameterMonitoring {
     };
 
     MonitoringDefinition<LimitCheck<float>> subsystemSafety2check{
-            11, 1, 500, 6, {
+            11, 1, 500, 12, {
                     -std::numeric_limits<float>::infinity(), 111, 50, 111
             }, {{
                         4, 0xff, static_cast<uint64_t>(SystemParameters::TemperatureStatus::Nominal)

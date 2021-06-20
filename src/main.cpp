@@ -64,8 +64,11 @@ std::optional<InternalTemperatureTask> tempInternal;
 
 int main ( void )
 {
-    /* Initialize all modules */
+    // Initialize all modules
     SYS_Initialize ( NULL );
+
+    // Disable interrupts to prevent RTOS SysTick from crashing the system
+    SysTick->CTRL &= ~(SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk);
 
     Logger::format.precision(2);
 
@@ -86,6 +89,7 @@ int main ( void )
     xTaskCreate(vClassTask<TemperatureTask>, "T1", 1500, &*temp1task, tskIDLE_PRIORITY + 1, nullptr);
     xTaskCreate(vClassTask<TemperatureTask>, "T2", 1500, &*temp2task, tskIDLE_PRIORITY + 1, nullptr);
 
+    SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk | SysTick_CTRL_ENABLE_Msk;
     vTaskStartScheduler();
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "EndlessLoop"
