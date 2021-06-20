@@ -13,6 +13,7 @@ private:
 
     static void functionRestart(String<ECSS_FUNCTION_MAX_ARG_LENGTH> args);
     static void functionRestartSensor(String<ECSS_FUNCTION_MAX_ARG_LENGTH> args);
+    static void functionLog(String<ECSS_FUNCTION_MAX_ARG_LENGTH> log);
 };
 
 extern std::optional<ECSSTask> ecssTask;
