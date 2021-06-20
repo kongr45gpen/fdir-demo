@@ -53,8 +53,12 @@ public:
         return static_cast<ReadableParameter<Value>*>(&(parametersArray[parameterId].get()))->getValue();
     }
 
-    uint64_t convertParameterValue(uint16_t parameterId) {
+    uint64_t convertParameterValueToInt(uint16_t parameterId) {
         return parametersArray[parameterId].get().convertValue();
+    }
+
+    float convertParameterValueToFloat(uint16_t parameterId) {
+        return parametersArray[parameterId].get().convertFloat();
     }
 private:
     static uint32_t getTick();
